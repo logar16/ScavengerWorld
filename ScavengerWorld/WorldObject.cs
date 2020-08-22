@@ -7,7 +7,7 @@ using System.Windows;
 
 namespace ScavengerWorld
 {
-    public class WorldObject
+    public abstract class WorldObject
     {
         public Point Location { get; }
         public Guid Id { get; private set; }
@@ -27,5 +27,7 @@ namespace ScavengerWorld
         {
             Location.Offset(xDelta, yDelta);
         }
+
+        public abstract bool ShouldRemove();
     }
 }

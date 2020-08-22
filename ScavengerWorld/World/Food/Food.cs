@@ -3,14 +3,15 @@ using System;
 
 namespace ScavengerWorld.World.Food
 {
-    public class Food: WorldObject
+    public class Food: WorldObject, IDisplayable, ISteppable
     {
         public SensoryDisplay Display { get; protected set; }
+        public FoodStorage Storage { get; set; }
 
         public int Quantity { get; private set; }
         
         public enum FoodQuality { POOR = 1, FAIR, GOOD, EXCELLENT }
-        public FoodQuality Quality { get; }
+        public FoodQuality Quality { get; private set; }
 
         /// <summary>
         /// A metric for how much food there is and how good it is.
@@ -23,6 +24,7 @@ namespace ScavengerWorld.World.Food
             get => Quantity * (int)Quality * (int)Quality;
         }
 
+        private double Health;
 
         public Food(int quantity, FoodQuality quality): 
             this(quantity, quality, SensoryDisplay.NONE) { }
@@ -32,6 +34,12 @@ namespace ScavengerWorld.World.Food
             Quantity = quantity;
             Quality = quality;
             Display = sensoryDisplay;
+            ResetHealth();
+        }
+
+        private void ResetHealth()
+        {
+            Health = 1000 / (int)Quality;
         }
 
         public int Consume(int quantityConsumed)
@@ -44,7 +52,32 @@ namespace ScavengerWorld.World.Food
             return Quantity;
         }
 
-        //TODO: Do we want an Age() method which causes food to go bad over time
-        //   if it isn't being properly stored?
+        public override bool ShouldRemove()
+        {
+            return (Health < 0 && Quality == FoodQuality.POOR);
+        }
+
+        public void Step(int timeStep)
+        {
+            if (Storage != null)
+            {
+                //TODO: Should storage just reduce impact of decay?
+                Decay(timeStep);
+            }
+        }
+
+        private void Decay(int timeStep)
+        {
+            Health -= timeStep;
+            if (Health < 0)
+            {
+                if ((int)Quality > 1)
+                {
+                    Quality = (FoodQuality)((int)Quality - 1);
+                    ResetHealth();
+                }
+                //else if Quality == POOR, it will be removed from the world
+            }
+        }
     }
 }

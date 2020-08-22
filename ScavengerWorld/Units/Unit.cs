@@ -1,14 +1,10 @@
 ﻿using ScavengerWorld.Sensory;
 using ScavengerWorld.Statistics;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using ScavengerWorld.World;
 
 namespace ScavengerWorld.Units
 {
-    class Unit: WorldObject
+    public abstract class Unit: WorldObject, IDisplayable, ISteppable
     {
         public int Health { get; protected set; }
         protected int HealthMax { get; set; }
@@ -24,14 +20,16 @@ namespace ScavengerWorld.Units
             Stats = new UnitStats();
         }
 
-        public bool IsAlive()
-        {
-            return Health > 0;
-        }
-
         protected int MissingHealth()
         {
             return HealthMax - Health;
         }
+
+        public override bool ShouldRemove()
+        {
+            return Health < 0;
+        }
+
+        public abstract void Step(int timeStep);
     }
 }

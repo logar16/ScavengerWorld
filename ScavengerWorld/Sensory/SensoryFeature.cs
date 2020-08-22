@@ -2,13 +2,20 @@
 
 namespace ScavengerWorld.Sensory
 {
-    public class SensoryFeature: WorldObject
+    public class SensoryFeature
     {
-        public double Strength { get; }
+        private double InitialStrength;
+        public double Strength { get; private set; }
 
         public SensoryFeature(double strength)
         {
-            Strength = strength;
+            Strength = InitialStrength = strength;
+        }
+
+        public double AdjustStrength(double ratio)
+        {
+            Strength = InitialStrength * ratio;
+            return Strength;
         }
     }
 }

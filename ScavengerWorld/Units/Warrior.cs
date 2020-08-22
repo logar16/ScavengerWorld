@@ -1,4 +1,4 @@
-﻿using ScavengerWorld.Items;
+﻿using ScavengerWorld.World.Items;
 using System;
 
 namespace ScavengerWorld.Units

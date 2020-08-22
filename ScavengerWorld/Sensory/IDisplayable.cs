@@ -4,9 +4,10 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace ScavengerWorld.Statistics
+namespace ScavengerWorld.Sensory
 {
-    public class UnitStats
+    interface IDisplayable
     {
+        SensoryDisplay Display { get; }
     }
 }

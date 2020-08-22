@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace ScavengerWorld.Teams
 {
-    class Team
+    public class Team
     {
         public int Id { get; }
         public List<Unit> Units { get; }

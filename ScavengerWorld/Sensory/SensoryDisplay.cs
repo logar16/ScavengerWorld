@@ -1,13 +1,18 @@
-﻿namespace ScavengerWorld.Sensory
+﻿using System.Collections.Generic;
+using System.Linq;
+
+namespace ScavengerWorld.Sensory
 {
     public class SensoryDisplay
     {
-        public SensoryFeature Visual { get; }
-        public SensoryFeature Auditory { get; }
-        public SensoryFeature Smell { get; }
-        public SensoryFeature Taste { get; }
+        public SensoryFeature Visual { get; private set; }
+        public SensoryFeature Auditory { get; private set; }
+        public SensoryFeature Smell { get; private set; }
+        public SensoryFeature Taste { get; private set; }
 
-        public static readonly SensoryDisplay NONE = new SensoryDisplay();
+        private List<SensoryFeature> AllFeatures;
+
+        public static readonly SensoryDisplay NONE = CreateNone();
 
         public SensoryDisplay(SensoryFeature visual, 
                               SensoryFeature auditory, 
@@ -18,14 +23,27 @@
             Auditory = auditory;
             Smell = olfactory;
             Taste = gustatory;
+
+            AllFeatures = new List<SensoryFeature>()
+            {
+                Visual,
+                Auditory,
+                Smell,
+                Taste
+            };
         }
 
-        private SensoryDisplay()
+        private static SensoryDisplay CreateNone()
         {
-            Visual = new SensoryFeature(0);
-            Auditory = new SensoryFeature(0);
-            Smell = new SensoryFeature(0);
-            Taste = new SensoryFeature(0);
+            return new SensoryDisplay(new SensoryFeature(0),
+                                      new SensoryFeature(0),
+                                      new SensoryFeature(0),
+                                      new SensoryFeature(0));
+        }
+
+        public ICollection<SensoryFeature> AsCollection()
+        {
+            return AllFeatures.ToList();
         }
     }
 }

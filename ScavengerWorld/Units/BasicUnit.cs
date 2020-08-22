@@ -44,7 +44,7 @@ namespace ScavengerWorld.Units
         public Food Drop(Food.FoodQuality quality)
         {
             var min = FoodSupply.Where(food => food.Quality == quality)
-                .Aggregate((f1, f2) => f1.Quantity < f2.Quantity ? f1 : f2);
+                                .Aggregate((f1, f2) => f1.Quantity < f2.Quantity ? f1 : f2);
             return Drop(min);
         }
 
