@@ -1,10 +1,5 @@
 ﻿using ScavengerWorld.Sensory;
 using ScavengerWorld.Units;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace ScavengerWorld.World.Markers
 {
@@ -14,13 +9,13 @@ namespace ScavengerWorld.World.Markers
             base(display, owner, duration, decayRate)
         { }
 
-        public override bool Age(int timeStep)
+        public override void Step(int timeStep)
         {
             Duration -= DecayRate * timeStep;
-            return IsActive();
+            UpdateDisplayFeatures();
         }
 
-        public override bool IsActive()
+        public override bool ShouldRemove()
         {
             return Duration > 0;
         }

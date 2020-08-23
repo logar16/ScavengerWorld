@@ -1,4 +1,4 @@
-﻿using ScavengerWorld.Units;
+﻿using ScavengerWorld.Units.Actions;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -7,12 +7,17 @@ using System.Threading.Tasks;
 
 namespace ScavengerWorld.World
 {
-    interface IWorld
+    public interface IWorld
     {
-        WorldState Step(UnitActions actionsToTake);
-
         WorldState CurrentState { get;}
+        
+        WorldState Step(UnitActionCollection actionsToTake, int timeSteps=1);
 
+        WorldState Reset();
+
+        bool IsDone();
+
+        int StepsTaken { get; }
 
     }
 }

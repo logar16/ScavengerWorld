@@ -1,5 +1,5 @@
 ﻿using ScavengerWorld.Units;
-using ScavengerWorld.World.Food;
+using ScavengerWorld.World.Foods;
 using System;
 using System.Collections.Generic;
 using System.Linq;

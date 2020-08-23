@@ -13,13 +13,14 @@ namespace ScavengerWorld.Units
         {
             Random = new Random();
         }
-
+        
+        //TODO: Location of units matters, need to reflect that here (probably)
         public List<Unit> CreateRandomUnits(int count)
         {
             var list = new List<Unit>(count);
             for (int i = 0; i < count; i++)
             {
-                list[i] = new Unit();
+                list.Add(new Warrior());
             }
             return list;
         }
@@ -29,7 +30,7 @@ namespace ScavengerWorld.Units
             var list = new List<Unit>(count);
             for (int i = 0; i < count; i++)
             {
-                list[i] = new Unit();
+                list[i] = (Unit)Activator.CreateInstance(unitType);
             }
             return list;
         }

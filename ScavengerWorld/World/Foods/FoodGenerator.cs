@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace ScavengerWorld.World.Food
+namespace ScavengerWorld.World.Foods
 {
     class FoodGenerator
     {

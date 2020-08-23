@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace ScavengerWorld.Sensory
 {
-    interface IDisplayable
+    interface IDiscoverable
     {
         SensoryDisplay Display { get; }
     }

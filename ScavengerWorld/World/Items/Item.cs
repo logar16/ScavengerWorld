@@ -1,18 +1,37 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using ScavengerWorld.Units;
+using System;
 
 namespace ScavengerWorld.World.Items
 {
-    class Item
+    public abstract class Item : WorldObject
     {
-        public double AttackModifier;
+        public Unit Owner { get; private set; }
+        public double AttackModifier { get; protected set; }
+        protected int RemainingUses { get; set; }
 
-        public bool IsInHand()
+        public bool IsInHand { get => Owner != null; }
+
+        public bool PickUp(Unit owner)
         {
-            return false;
+            if (IsInHand)
+                return false;
+            
+            Owner = owner;
+            return true;
         }
+
+        public void Drop()
+        {
+            Owner = null;
+        }
+
+        
+
+
+        public override bool ShouldRemove()
+        {
+            return RemainingUses < 0;
+        }
+        public abstract void Use();
     }
 }

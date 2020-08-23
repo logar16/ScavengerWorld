@@ -18,9 +18,10 @@ namespace ScavengerWorld.World.Markers
         {
             var modifier = Math.Pow(DecayRate, timeStep + 1);
             Duration *= modifier;
+            UpdateDisplayFeatures();
         }
 
-        public override bool IsActive()
+        public override bool ShouldRemove()
         {
             return Duration > 0.001;
         }

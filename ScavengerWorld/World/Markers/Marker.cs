@@ -3,7 +3,7 @@ using ScavengerWorld.Units;
 
 namespace ScavengerWorld.World.Markers
 {
-    abstract class Marker : ISteppable
+    abstract class Marker : WorldObject, ISteppable
     {
         public SensoryDisplay Display { get; }
         public Unit Owner { get; }
@@ -18,8 +18,6 @@ namespace ScavengerWorld.World.Markers
             Duration = duration;
             DecayRate = decayRate;
         }
-
-        public abstract bool IsActive();
         
         protected void UpdateDisplayFeatures()
         {

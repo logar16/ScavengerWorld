@@ -1,13 +1,12 @@
-﻿using ScavengerWorld.Items;
-using ScavengerWorld.Teams;
-using ScavengerWorld.World.Food;
+﻿using ScavengerWorld.Teams;
+using ScavengerWorld.World.Foods;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 
 namespace ScavengerWorld.Units
 {
-    class BasicUnit: Unit
+    public abstract class BasicUnit: Unit
     {
         public double GatherRate { get; protected set; }
         public double GatherLimit { get; protected set; }

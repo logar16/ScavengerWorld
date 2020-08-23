@@ -5,7 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
 
-namespace ScavengerWorld
+namespace ScavengerWorld.World
 {
     public abstract class WorldObject
     {

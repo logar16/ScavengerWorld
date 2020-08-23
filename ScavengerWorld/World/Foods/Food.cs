@@ -1,15 +1,15 @@
 ﻿using ScavengerWorld.Sensory;
 using System;
 
-namespace ScavengerWorld.World.Food
+namespace ScavengerWorld.World.Foods
 {
-    public class Food: WorldObject, IDisplayable, ISteppable
+    public class Food : WorldObject, IDiscoverable, ISteppable
     {
         public SensoryDisplay Display { get; protected set; }
         public FoodStorage Storage { get; set; }
 
         public int Quantity { get; private set; }
-        
+
         public enum FoodQuality { POOR = 1, FAIR, GOOD, EXCELLENT }
         public FoodQuality Quality { get; private set; }
 
@@ -26,8 +26,9 @@ namespace ScavengerWorld.World.Food
 
         private double Health;
 
-        public Food(int quantity, FoodQuality quality): 
-            this(quantity, quality, SensoryDisplay.NONE) { }
+        public Food(int quantity, FoodQuality quality) :
+            this(quantity, quality, SensoryDisplay.NONE)
+        { }
 
         public Food(int quantity, FoodQuality quality, SensoryDisplay sensoryDisplay)
         {
@@ -46,38 +47,31 @@ namespace ScavengerWorld.World.Food
         {
             Quantity -= quantityConsumed;
             if (Quantity < 0)
-            {
                 throw new ArgumentException("quantityConsumed was greater than remaining quantity");
-            }
             return Quantity;
         }
 
         public override bool ShouldRemove()
         {
-            return (Health < 0 && Quality == FoodQuality.POOR);
+            return Health < 0 && Quality == FoodQuality.POOR;
         }
 
         public void Step(int timeStep)
         {
             if (Storage != null)
-            {
                 //TODO: Should storage just reduce impact of decay?
                 Decay(timeStep);
-            }
         }
 
         private void Decay(int timeStep)
         {
             Health -= timeStep;
             if (Health < 0)
-            {
                 if ((int)Quality > 1)
                 {
                     Quality = (FoodQuality)((int)Quality - 1);
                     ResetHealth();
                 }
-                //else if Quality == POOR, it will be removed from the world
-            }
         }
     }
 }

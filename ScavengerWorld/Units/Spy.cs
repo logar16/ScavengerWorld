@@ -1,4 +1,5 @@
-﻿using System;
+﻿using ScavengerWorld.Units.Actions;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -6,14 +7,24 @@ using System.Threading.Tasks;
 
 namespace ScavengerWorld.Units
 {
-    class Spy: BasicUnit
+    public class Spy : BasicUnit
     {
-        public Spy()
+        public Spy() : base()
         {
             Health = 35;
-            Attack = 5;
+            AttackLevel = 5;
             Speed = 4;
             LineOfSight = 7;
+        }
+
+        public override void Step(int timeStep)
+        {
+            throw new NotImplementedException();
+        }
+
+        public override void TakeAction(UnitAction action)
+        {
+            throw new NotImplementedException();
         }
     }
 }

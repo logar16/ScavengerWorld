@@ -6,13 +6,13 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace ScavengerWorld.World.Food
+namespace ScavengerWorld.World.Foods
 {
-    public class FoodStorage: WorldObject, IDisplayable, ISteppable
+    public class FoodStorage : WorldObject, IDiscoverable, ISteppable
     {
         public Team Owner { get; set; }
         public int Limit { get; }
-        
+
         private List<Food> Supply;
 
         /// <summary>
