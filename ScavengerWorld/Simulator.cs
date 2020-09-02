@@ -12,11 +12,15 @@ namespace ScavengerWorld
 
         public Simulator()
         {
-            var builder = new WorldBuilder();
-            World = builder.WithGeography(10, 6)
-                           .WithAmbience(100, 20)
-                           .WithTeams(2, 10)
-                           .Build();
+            //var builder = new WorldBuilder();
+            //World = builder.WithGeography(10, 6)
+            //               .WithAmbience(100, 20)
+            //               .WithTeams(2, 10)
+            //               .WithFood(2.0)
+            //               .Build();
+
+            var builder = new JsonWorldBuilder();
+            World = builder.LoadWorldFile("Config/Worlds/test-world.json");
         }
 
         public void Run()

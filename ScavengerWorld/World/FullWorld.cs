@@ -27,6 +27,10 @@ namespace ScavengerWorld.World
             //TODO: Add unit actions being instructed (Unit::TakeAction) 
                 //and then applied in the Step function
             State.Step(timeSteps);
+            if (StepsTaken % 100 == 0)
+            {
+                Log.Debug(State.ToString());
+            }
             return State;
             //TODO: return State.Clone();
         }

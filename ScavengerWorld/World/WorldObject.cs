@@ -7,9 +7,9 @@ using System.Windows;
 
 namespace ScavengerWorld.World
 {
-    public abstract class WorldObject
+    public abstract class WorldObject : ICloneable
     {
-        public Point Location { get; }
+        public Point Location { get; private set; }
         public Guid Id { get; private set; }
 
         protected WorldObject()
@@ -25,9 +25,21 @@ namespace ScavengerWorld.World
 
         public void Move(int xDelta, int yDelta)
         {
-            Location.Offset(xDelta, yDelta);
+            var location = Location;
+            location.Offset(xDelta, yDelta);
+            Location = location;
         }
 
         public abstract bool ShouldRemove();
+
+        public object Clone()
+        {
+            return MemberwiseClone();
+        }
+
+        public override string ToString()
+        {
+            return $"{Id}: {{ Location: {Location} }}";
+        }
     }
 }

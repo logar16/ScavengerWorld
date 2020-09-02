@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace ScavengerWorld.World
 {
-    public class AmbientEnvironment : ISteppable
+    public class AmbientEnvironment : ISteppable, ICloneable
     {
         public enum DayStatus { DAY, NIGHT }
 
@@ -53,6 +53,16 @@ namespace ScavengerWorld.World
                     Log.Warning("Winter has arrived!");
                 }
             }
+        }
+
+        public object Clone()
+        {
+            return MemberwiseClone();
+        }
+
+        public override string ToString()
+        {
+            return $"{{ DayStatus: {Status}, Season: {Season} }}";
         }
     }
 }

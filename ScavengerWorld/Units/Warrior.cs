@@ -9,11 +9,13 @@ namespace ScavengerWorld.Units
         public Warrior()
         {
             Health = 40;
+            HealthMax = Health;
             AttackLevel = 10;
             Speed = 3;
             LineOfSight = 5;
             GatherRate = 1;
             GatherLimit = 1;
+            
         }
 
         public bool PickUpItem(Item item)
@@ -32,6 +34,11 @@ namespace ScavengerWorld.Units
         }
 
         public override void TakeAction(UnitAction action)
+        {
+            throw new NotImplementedException();
+        }
+
+        public override object Clone()
         {
             throw new NotImplementedException();
         }

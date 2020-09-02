@@ -1,0 +1,43 @@
+{
+  "unitConfig": "Config/Units/unit-stats.json",
+
+  "geography": {
+    "width": 20,
+    "height": 10,
+    "ratioWalkable": 0.9,
+    "seed": -1
+  },
+  "ambience": {
+    "stepsPerSeason": 300,
+    "stepsPerDay": 10
+  },
+  "teams": [
+    {
+      "units": "Config/Teams/monsters.json"
+    },
+    {
+      "units": "Config/Teams/basic-team.json",
+      "storage": {
+        "x": 18,
+        "y": 8,
+        "limit": 1000
+      }
+    },
+    {
+      "units": "Config/Teams/basic-team.json",
+      "storage": {
+        "x": 2,
+        "y": 2,
+        "limit": 1000
+      }
+    }
+  ],
+  "food": {
+
+  },
+  "inatimateObjects": {
+    "items": [
+
+    ]
+  }
+}

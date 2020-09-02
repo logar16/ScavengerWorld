@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace ScavengerWorld.World
 {
-    public class Geography
+    public class Geography : ICloneable
     {
         public int Width { get; }
         public int Height { get; }
@@ -35,25 +35,29 @@ namespace ScavengerWorld.World
                     Space[row, col] = terrain;
                 }
             }
-            Log.Debug("World Geography: " + ToString());
+            //Log.Debug("World Geography: " + ToString());
         }
 
         public override string ToString()
         {
             var builder = new StringBuilder();
+            builder.AppendLine();
             for (int row = 0; row < Height; row++)
             {
-                builder.AppendLine();
                 for (int col = 0; col < Width; col++)
                 {
                     if (col == 0)
-                        builder.Append("| ");
-                    builder.Append((int)Space[row, col]);
-                    if (col == Width-1)
-                        builder.Append(" |");
+                        builder.Append("|");
+                    builder.Append($"{(int)Space[row, col]}|");
                 }
+                builder.AppendLine();
             }
             return builder.ToString();
+        }
+
+        public object Clone()
+        {
+            return MemberwiseClone();
         }
     }
 }

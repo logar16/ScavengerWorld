@@ -59,6 +59,7 @@
     <Compile Include="Sensory\IDiscoverable.cs" />
     <Compile Include="Simulator.cs" />
     <Compile Include="Units\Actions\UnitActionCollection.cs" />
+    <Compile Include="World\Building\JsonWorldBuilder.cs" />
     <Compile Include="World\Building\WorldBuilder.cs" />
     <Compile Include="World\ISteppable.cs" />
     <Compile Include="World\Items\Item.cs" />
@@ -94,6 +95,18 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
+    <None Include="Config\Teams\basic-team.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="Config\Teams\monsters.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="Config\Worlds\test-world.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="Config\Units\unit-stats.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup />

@@ -1,0 +1,40 @@
+{
+  "Monster": {
+    "health": 40,
+    "attack": 10,
+    "speed": 3,
+    "lineOfSight": 5
+  },
+  "Gatherer": {
+    "health": 30,
+    "attack": 3,
+    "speed": 3,
+    "lineOfSight": 5,
+    "gatherRate": 1,
+    "gatherLimit": 1
+  },
+  "Scout": {
+    "health": 20,
+    "attack": 4,
+    "speed": 7,
+    "lineOfSight": 7,
+    "gatherRate": 1,
+    "gatherLimit": 1
+  },
+  "Spy": {
+    "health": 40,
+    "attack": 10,
+    "speed": 3,
+    "lineOfSight": 5,
+    "gatherRate": 1,
+    "gatherLimit": 1
+  },
+  "Warrior": {
+    "health": 40, 
+    "attackLevel": 10,
+    "speed": 3, 
+    "lineOfSight": 5,
+    "gatherRate": 1, 
+    "gatherLimit": 1
+  }
+}

@@ -18,5 +18,10 @@ namespace ScavengerWorld.Units
         {
             throw new NotImplementedException();
         }
+
+        public override object Clone()
+        {
+            throw new NotImplementedException();
+        }
     }
 }

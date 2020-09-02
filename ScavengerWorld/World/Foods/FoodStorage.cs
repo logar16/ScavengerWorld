@@ -3,8 +3,7 @@ using ScavengerWorld.Teams;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using System.Windows;
 
 namespace ScavengerWorld.World.Foods
 {
@@ -20,10 +19,11 @@ namespace ScavengerWorld.World.Foods
         /// </summary>
         public SensoryDisplay Display { get; private set; }
 
-        public FoodStorage(int limit)
+        public FoodStorage(int limit, Point location)
         {
             Supply = new List<Food>(100);
             Limit = limit;
+            Move(location);
         }
 
         public bool Add(Food food)
