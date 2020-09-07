@@ -70,63 +70,63 @@ namespace ScavengerWorld.World.Building
 
         
 
-        public WorldBuilder WithItems(ICollection<Item> items)
-        {
-            State.InanimateObjects.AddRange(items);
-            return this;
-        }
+        //public WorldBuilder WithItems(ICollection<Item> items)
+        //{
+        //    State.InanimateObjects.AddRange(items);
+        //    return this;
+        //}
 
-        public WorldBuilder WithFood(ICollection<Food> food)
-        {
-            State.InanimateObjects.AddRange(food);
-            return this;
-        }
+        //public WorldBuilder WithFood(ICollection<Food> food)
+        //{
+        //    State.InanimateObjects.AddRange(food);
+        //    return this;
+        //}
 
-        public WorldBuilder WithFood(double ratioPerUnit)
-        {
-            var count = 0.0;
-            foreach (var list in State.Teams)
-            {
-                count += list.Units.Count;
-            }
+        //public WorldBuilder WithFood(double ratioPerUnit)
+        //{
+        //    var count = 0.0;
+        //    foreach (var list in State.Teams)
+        //    {
+        //        count += list.Units.Count;
+        //    }
 
-            count *= ratioPerUnit;
+        //    count *= ratioPerUnit;
 
-            var foodList = new List<Food>();
-            for (int i = 0; i < count; i++)
-            {
-                var food = new Food(1, Food.FoodQuality.EXCELLENT);
-                foodList.Add(food);
-            }
+        //    var foodList = new List<Food>();
+        //    for (int i = 0; i < count; i++)
+        //    {
+        //        var food = new Food(1, Food.FoodQuality.EXCELLENT);
+        //        foodList.Add(food);
+        //    }
 
-            return WithFood(foodList);
-        }
+        //    return WithFood(foodList);
+        //}
 
-        public WorldBuilder WithFood(int count, int averageSize, Food.FoodQuality averageQuality)
-        {
-            var foodList = new List<Food>();
-            var qualityRange = Enum.GetValues(typeof(Food.FoodQuality)).Length;
-            var standardQuality = (int)averageQuality;
+        //public WorldBuilder WithFood(int count, int averageSize, Food.FoodQuality averageQuality)
+        //{
+        //    var foodList = new List<Food>();
+        //    var qualityRange = Enum.GetValues(typeof(Food.FoodQuality)).Length;
+        //    var standardQuality = (int)averageQuality;
 
-            for (int i = 0; i < count; i++)
-            {
-                var size = Random.Next(averageSize * 2);
-                var quality = Random.Next(qualityRange);
-                if (quality != standardQuality)
-                {
-                    if (Random.Next(4) == 0)
-                    {
-                        if (quality < standardQuality)
-                            quality += 1;
-                        else
-                            quality -= 1;
-                    }
-                }
+        //    for (int i = 0; i < count; i++)
+        //    {
+        //        var size = Random.Next(averageSize * 2);
+        //        var quality = Random.Next(qualityRange);
+        //        if (quality != standardQuality)
+        //        {
+        //            if (Random.Next(4) == 0)
+        //            {
+        //                if (quality < standardQuality)
+        //                    quality += 1;
+        //                else
+        //                    quality -= 1;
+        //            }
+        //        }
 
-                var food = new Food(size, (Food.FoodQuality)quality);
-            }
+        //        var food = new Food(size, (Food.FoodQuality)quality);
+        //    }
 
-            return WithFood(foodList);
-        }
+        //    return WithFood(foodList);
+        //}
     }
 }

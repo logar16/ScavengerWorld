@@ -2,6 +2,7 @@
 using ScavengerWorld.World;
 using ScavengerWorld.World.Building;
 using Serilog;
+using System.Diagnostics;
 using System.Linq;
 
 namespace ScavengerWorld
@@ -27,16 +28,20 @@ namespace ScavengerWorld
         {
             var state = World.Reset();
             var actions = new UnitActionCollection();
+            var fullWatch = Stopwatch.StartNew();
 
             while (!World.IsDone())
             {
-                var units = state.Teams.SelectMany(t => t.Units);
+                var units = state.AllUnits.Values;
                 actions.SetDefaultActions(units);
 
                 state = World.Step(actions);
                 actions.Reset();
             }
-            Log.Information("Took {X} steps", World.StepsTaken);
+
+            fullWatch.Stop();
+            Log.Information("Took {steps} steps in {time} milliseconds with an average step of {average} ms", 
+                World.StepsTaken, fullWatch.ElapsedMilliseconds, (double)fullWatch.ElapsedMilliseconds / World.StepsTaken);
         }
     }
 }

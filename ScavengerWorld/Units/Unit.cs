@@ -9,11 +9,6 @@ namespace ScavengerWorld.Units
 {
     public abstract class Unit: WorldObject, IDiscoverable, ISteppable, ICloneable
     {
-        [JsonProperty("health")]
-        public int Health { get; protected set; }
-        protected int HealthMax { get; set; }
-        protected int MissingHealth { get => HealthMax - Health; }
-
         [JsonProperty("attack")]
         public int AttackLevel { get; protected set; }
         
@@ -43,12 +38,19 @@ namespace ScavengerWorld.Units
 
         public abstract void Step(int timeStep);
 
-        public abstract void TakeAction(UnitAction action);
+        public abstract bool CanAttemptAction(UnitAction action);
+
+        public void Attack(WorldObject target)
+        {
+            //TODO: record stat
+            target.Injure(AttackLevel);
+        }
+
+
 
         public override string ToString()
         {
-            var id = Id.ToString().Substring(0, 4);
-            return $"{id}: {{ Unit: {GetType().Name}, Location: ({Location}), {Details()} }}";
+            return $"{IdPrefix}: {{ Unit: {GetType().Name}, Location: ({Location}), {Details()} }}";
         }
 
         protected string Details()

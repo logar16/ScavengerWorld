@@ -1,0 +1,20 @@
+{
+  "units": [
+    {
+      "type": "Gatherer",
+      "count": 5
+    },
+    {
+      "type": "Spy",
+      "count": 1
+    },
+    {
+      "type": "Scout",
+      "count": 2
+    },
+    {
+      "type": "Warrior",
+      "count": 5
+    }
+  ]
+}

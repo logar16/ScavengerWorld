@@ -24,7 +24,7 @@ namespace ScavengerWorld.World.Foods
             get => Quantity * (int)Quality * (int)Quality;
         }
 
-        private double Health;
+        private double Freshness;
 
         public Food(int quantity, FoodQuality quality) :
             this(quantity, quality, SensoryDisplay.NONE)
@@ -40,7 +40,7 @@ namespace ScavengerWorld.World.Foods
 
         private void ResetHealth()
         {
-            Health = 1000 / (int)Quality;
+            Freshness = 1000 / (int)Quality;
         }
 
         public int Consume(int quantityConsumed)
@@ -53,7 +53,7 @@ namespace ScavengerWorld.World.Foods
 
         public override bool ShouldRemove()
         {
-            return Health < 0 && Quality == FoodQuality.POOR;
+            return Freshness < 0 && Quality == FoodQuality.POOR;
         }
 
         public void Step(int timeStep)
@@ -65,8 +65,8 @@ namespace ScavengerWorld.World.Foods
 
         private void Decay(int timeStep)
         {
-            Health -= timeStep;
-            if (Health < 0)
+            Freshness -= timeStep;
+            if (Freshness < 0)
                 if ((int)Quality > 1)
                 {
                     Quality = (FoodQuality)((int)Quality - 1);

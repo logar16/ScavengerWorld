@@ -33,7 +33,7 @@ namespace ScavengerWorld.Units
             throw new NotImplementedException();
         }
 
-        public override void TakeAction(UnitAction action)
+        public override bool CanAttemptAction(UnitAction action)
         {
             throw new NotImplementedException();
         }

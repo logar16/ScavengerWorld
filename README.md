@@ -4,14 +4,31 @@ and playing them.  The simulation is described in more detail in this [Google Do
 I chose to do the simulation part in C# so it can take advantage of type safety and speed.
 I will probably do the learning agents in other languages for their tools.
 
+
+## Units
+
+### Actions
+
+Units can take the following actions
+
+| Actions | Additional Input                                              |
+|---------|---------------------------------------------------------------|
+| No-op   |                                                               |
+| Move    | Cardinal Direction                                            |
+| Pick Up | GUID of object (item or food)                                 |
+| Drop    | GUID of object                                                |
+| Give    | GUID of object to give and GUID of receiver (unit or storage) |
+| Receive | GUID of offered object                                        |
+| Attack  | GUID of object                                                |
+
 ## TODOs
 
 1. Test printout to visualize
   * Currently works but it would be nice to have more detailed visualization to improve understandability
-1. Configuration and creation for food and items (items low-priority)
 1. Action input handled
 1. `SensoryDisplay` and how distance affects it
 1. Tune configuration for Unit attributes
+1. Configuration and creation for items (low-priority)
 1. Finish mimicing the OpenAI gym interface
 1. Test basic hand-crafted AI implementations
 1. Communication Protocol/API

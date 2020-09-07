@@ -40,6 +40,8 @@ namespace ScavengerWorld.World.Building
             State.Ambience = ParseAmbiance(config);
             State.Geography = ParseGeography(config);
             State.Teams = ParseTeams(config);
+            State.AllUnits = State.Teams.SelectMany(t => t.Units)
+                                        .ToDictionary(unit => unit.Id, unit => unit);
             State.Food = ParseFood(config);
             //State.InanimateObjects = ParseItems(config);
 
@@ -52,7 +54,7 @@ namespace ScavengerWorld.World.Building
             throw new NotImplementedException();
         }
 
-        private List<Food> ParseFood(JObject config)
+        private Dictionary<Guid, Food> ParseFood(JObject config)
         {
             config = config.Value<JObject>("food");
             var ratio = config.Value<double>("ratio");
@@ -69,7 +71,7 @@ namespace ScavengerWorld.World.Building
                 foods.Add(food);
             }
 
-            return foods;
+            return foods.ToDictionary(f => f.Id, f => f);
         }
 
         private List<Team> ParseTeams(JObject config)

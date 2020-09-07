@@ -9,7 +9,7 @@ namespace ScavengerWorld.World.Foods
 {
     public class FoodStorage : WorldObject, IDiscoverable, ISteppable
     {
-        public Team Owner { get; set; }
+        public int OwnerId { get; set; }
         public int Limit { get; }
 
         private List<Food> Supply;
@@ -24,6 +24,7 @@ namespace ScavengerWorld.World.Foods
             Supply = new List<Food>(100);
             Limit = limit;
             Move(location);
+            Display = new SensoryDisplay();
         }
 
         public FoodStorage(FoodStorage other)
@@ -37,7 +38,9 @@ namespace ScavengerWorld.World.Foods
             Limit = other.Limit;
             Move(other.Location);
 
-            //TODO: copy over sensory display
+            Display = (SensoryDisplay)other.Display.Clone();
+
+            OwnerId = other.OwnerId;
         }
 
         public bool Add(Food food)
@@ -86,8 +89,7 @@ namespace ScavengerWorld.World.Foods
 
         public override object Clone()
         {
-            var copy = new FoodStorage(this);
-            return copy;
+            return new FoodStorage(this);
         }
     }
 }

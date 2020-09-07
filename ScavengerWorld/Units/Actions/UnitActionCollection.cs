@@ -5,7 +5,7 @@ namespace ScavengerWorld.Units.Actions
 {
     public class UnitActionCollection
     {
-        private Dictionary<Guid, UnitAction> Actions;
+        internal Dictionary<Guid, UnitAction> Actions { get; private set; }
 
         public UnitActionCollection()
         {
@@ -24,7 +24,7 @@ namespace ScavengerWorld.Units.Actions
 
         public UnitAction GetAction(Unit unit)
         {
-            return Actions.ContainsKey(unit.Id) ? Actions[unit.Id] : UnitAction.NONE;
+            return Actions.ContainsKey(unit.Id) ? Actions[unit.Id] : UnitAction.NOOP;
         }
 
         public void Reset()
@@ -36,7 +36,7 @@ namespace ScavengerWorld.Units.Actions
         {
             foreach (var unit in units)
             {
-                AddAction(unit.Id, UnitAction.NONE);
+                AddAction(unit.Id, UnitAction.NOOP);
             }
         }
     }

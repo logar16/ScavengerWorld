@@ -2,6 +2,7 @@
 using ScavengerWorld.World.Foods;
 using Serilog;
 using System.Collections.Generic;
+using System.Linq;
 using System.Text;
 
 namespace ScavengerWorld.Teams
@@ -14,19 +15,21 @@ namespace ScavengerWorld.Teams
 
         public FoodStorage FoodStorage { get; }
 
-        public Team(Team team)
+        public Team(Team other)
         {
-            Id = team.Id;
-            Units = new List<Unit>();
-            foreach (var unit in team.Units)
+            Id = other.Id;
+            Units = other.Units.Select(unit => (Unit)unit.Clone()).ToList();
+
+            if (other.FoodStorage != null)
             {
-                Units.Add((Unit)unit.Clone());
+                FoodStorage = (FoodStorage)other.FoodStorage.Clone();
             }
         }
 
         public Team(int id, List<Unit> units, FoodStorage storage) : this(id, units)
         {
             FoodStorage = storage;
+            FoodStorage.OwnerId = Id;
         }
 
         public Team(int id, List<Unit> units)

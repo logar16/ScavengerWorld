@@ -68,9 +68,10 @@ namespace ScavengerWorld.Units
             Health = Math.Min(Health + healthPoints, HealthMax);
         }
 
-        public void Injure(int attack)
+        public override void Injure(int damage)
         {
-            Health -= attack;
+            base.Injure(damage);
+            //TODO: Record stats
         }
 
         public override object Clone()

@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows;
 
 namespace ScavengerWorld.World
 {
@@ -58,6 +59,11 @@ namespace ScavengerWorld.World
         public object Clone()
         {
             return MemberwiseClone();
+        }
+
+        internal Terrain GetTerrainAt(Point location)
+        {
+            return Space[(int)location.Y, (int)location.X];
         }
     }
 }

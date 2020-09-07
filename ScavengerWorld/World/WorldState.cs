@@ -1,4 +1,5 @@
 ﻿using ScavengerWorld.Teams;
+using ScavengerWorld.Units;
 using ScavengerWorld.World.Foods;
 using System;
 using System.Collections.Generic;
@@ -12,51 +13,61 @@ namespace ScavengerWorld.World
         public AmbientEnvironment Ambience { get; internal set; }
         public Geography Geography { get; internal set; }
         public List<Team> Teams { get; internal set; }
+        public Dictionary<Guid, Unit> AllUnits { get; internal set; }
         public int TotalUnits { get { return Teams.Sum(t => t.UnitCount); } }
 
-        public List<Food> Food { get; internal set; }
-        public List<WorldObject> InanimateObjects { get; internal set; }
+        public Dictionary<Guid, Food> Food { get; internal set; }
+        public Dictionary<Guid, WorldObject> InanimateObjects { get; internal set; }
         //private List<WorldObject> DestroyedObjects;
 
         public WorldState()
         {
             Teams = new List<Team>();
-            Food = new List<Food>();
-            InanimateObjects = new List<WorldObject>();
+            Food = new Dictionary<Guid, Food>();
+            InanimateObjects = new Dictionary<Guid, WorldObject>();
         }
 
         internal WorldState Clone()
         {
-            var other = (WorldState)MemberwiseClone();
-            other.Ambience = (AmbientEnvironment)Ambience.Clone();
-            other.Geography = (Geography)Geography.Clone();
+            var copy = new WorldState();
+            copy.Ambience = (AmbientEnvironment)Ambience.Clone();
+            copy.Geography = (Geography)Geography.Clone();
 
-            other.Teams = new List<Team>();
-            foreach (var team in Teams)
-            {
-                var copy = new Team(team);
-                other.Teams.Add(copy);
-            }
+            copy.Teams = Teams.Select(team => new Team(team)).ToList();
+            copy.AllUnits = copy.Teams.SelectMany(t => t.Units)
+                                      .ToDictionary(unit => unit.Id, unit => unit);
+            copy.Food = Food.ToDictionary(entry => entry.Key, entry => (Food)entry.Value.Clone());
+            copy.InanimateObjects = InanimateObjects.ToDictionary(entry => entry.Key, entry => (WorldObject)entry.Value.Clone());
 
-            other.Food = new List<Food>();
-            foreach (var food in Food)
-            {
-                other.Food.Add((Food)food.Clone());
-            }
-            
-            other.InanimateObjects = new List<WorldObject>();
-            foreach (var item in InanimateObjects)
-            {
-                other.InanimateObjects.Add((WorldObject)item.Clone());
-            }
-
-            return other;
+            return copy;
         }
 
 
         public void Step(int timeStep)
         {
             Ambience.Step(timeStep);
+        }
+
+        public void GetUnit(Guid unitGuid)
+        {
+
+        }
+
+        internal WorldObject GetObject(Guid objectId)
+        {
+            if (AllUnits.TryGetValue(objectId, out Unit unit))
+            {
+                return unit;
+            }
+            if (Food.TryGetValue(objectId, out Food food))
+            {
+                return food;
+            }
+            if (InanimateObjects.TryGetValue(objectId, out WorldObject obj))
+            {
+                return obj;
+            }
+            throw new KeyNotFoundException($"No such GUID in this WorldState: {objectId}");
         }
 
         public override string ToString()
@@ -81,6 +92,12 @@ namespace ScavengerWorld.World
 
             builder.AppendLine("}");
             return builder.ToString();
+        }
+
+        internal void Destroy(WorldObject target)
+        {
+            //TODO: The object is known to be destroyed, take it out immediately
+            throw new NotImplementedException();
         }
 
         private string DrawUnitMap()

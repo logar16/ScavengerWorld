@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Newtonsoft.Json;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -11,6 +12,12 @@ namespace ScavengerWorld.World
     {
         public Point Location { get; private set; }
         public Guid Id { get; private set; }
+        public string IdPrefix { get => Id.ToString().Substring(0, 4); }
+
+        [JsonProperty("hp")]
+        public int Health { get; protected set; }
+        protected int HealthMax { get; set; }
+        protected int MissingHealth { get => HealthMax - Health; }
 
         protected WorldObject()
         {
@@ -30,13 +37,31 @@ namespace ScavengerWorld.World
             Location = location;
         }
 
-        public abstract bool ShouldRemove();
+        public double DistanceTo(WorldObject other)
+        {
+            return DistanceTo(other.Location);
+        }
+
+        public double DistanceTo(Point point)
+        {
+            return Point.Subtract(Location, point).Length;
+        }
+
+        public virtual void Injure(int damage)
+        {
+            Health -= damage;
+        }
+
+        public virtual bool ShouldRemove()
+        {
+            return Health < 0;
+        }
 
         public abstract object Clone();
 
         public override string ToString()
         {
-            return $"{Id}: {{ Location: {Location} }}";
+            return $"{IdPrefix}: {{ Location: {Location} }}";
         }
     }
 }

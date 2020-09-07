@@ -58,7 +58,13 @@
   <ItemGroup>
     <Compile Include="Sensory\IDiscoverable.cs" />
     <Compile Include="Simulator.cs" />
+    <Compile Include="Units\Actions\ActionExecutor.cs" />
+    <Compile Include="Units\Actions\AttackAction.cs" />
+    <Compile Include="Units\Actions\GiveAction.cs" />
+    <Compile Include="Units\Actions\MoveAction.cs" />
+    <Compile Include="Units\Actions\TransferAction.cs" />
     <Compile Include="Units\Actions\UnitActionCollection.cs" />
+    <Compile Include="Units\Ghost.cs" />
     <Compile Include="World\Building\JsonWorldBuilder.cs" />
     <Compile Include="World\Building\WorldBuilder.cs" />
     <Compile Include="World\ISteppable.cs" />
@@ -76,7 +82,6 @@
     <Compile Include="Units\Scout.cs" />
     <Compile Include="Units\Spy.cs" />
     <Compile Include="Units\Unit.cs" />
-    <Compile Include="Units\UnitGenerator.cs" />
     <Compile Include="Units\Warrior.cs" />
     <Compile Include="World\Items\Weapon.cs" />
     <Compile Include="World\WorldObject.cs" />
@@ -95,6 +100,9 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
+    <None Include="Config\Teams\full-team.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
     <None Include="Config\Teams\basic-team.json">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
