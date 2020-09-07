@@ -3,7 +3,21 @@
     "health": 40,
     "attack": 10,
     "speed": 3,
-    "lineOfSight": 5
+    "lineOfSight": 5,
+    "sensoryDisplay": {
+      "visual": {
+        "value": 10,
+        "strength": 10
+      },
+      "auditory": {
+        "value": 10,
+        "strength": 10
+      },
+      "smell": {
+        "value": 10,
+        "strength": 10
+      }
+    }
   },
   "Gatherer": {
     "health": 30,

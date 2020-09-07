@@ -9,17 +9,13 @@ namespace ScavengerWorld.Units
 {
     public class Monster : Unit
     {
+
         public override void Step(int timeStep)
         {
             throw new NotImplementedException();
         }
 
         public override void TakeAction(UnitAction action)
-        {
-            throw new NotImplementedException();
-        }
-
-        public override object Clone()
         {
             throw new NotImplementedException();
         }

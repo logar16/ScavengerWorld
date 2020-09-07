@@ -22,6 +22,8 @@ namespace ScavengerWorld.Units
 
         [JsonProperty("lineOfSight")]
         public int LineOfSight { get; protected set; }
+
+        [JsonProperty("sensoryDisplay")]
         public SensoryDisplay Display { get; protected set; }
 
         public UnitStats Stats { get; }
@@ -29,6 +31,7 @@ namespace ScavengerWorld.Units
 
         protected Unit()
         {
+            Display = new SensoryDisplay();
             Stats = new UnitStats();
             HealthMax = Health;
         }
@@ -41,7 +44,6 @@ namespace ScavengerWorld.Units
         public abstract void Step(int timeStep);
 
         public abstract void TakeAction(UnitAction action);
-        public abstract object Clone();
 
         public override string ToString()
         {
@@ -52,6 +54,13 @@ namespace ScavengerWorld.Units
         protected string Details()
         {
             return $"Health: {Health}";
+        }
+
+        public override object Clone()
+        {
+            Unit copy = (Unit)MemberwiseClone();
+            copy.Display = (SensoryDisplay)Display.Clone();
+            return copy;
         }
     }
 }

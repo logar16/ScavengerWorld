@@ -33,5 +33,10 @@ namespace ScavengerWorld.World.Items
             return RemainingUses < 0;
         }
         public abstract void Use();
+
+        public override object Clone()
+        {
+            return MemberwiseClone();
+        }
     }
 }

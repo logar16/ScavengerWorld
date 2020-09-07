@@ -26,6 +26,20 @@ namespace ScavengerWorld.World.Foods
             Move(location);
         }
 
+        public FoodStorage(FoodStorage other)
+        {
+            Supply = new List<Food>(other.Supply.Count);
+            foreach (var food in other.Supply)
+            {
+                Supply.Add((Food)food.Clone());
+            }
+
+            Limit = other.Limit;
+            Move(other.Location);
+
+            //TODO: copy over sensory display
+        }
+
         public bool Add(Food food)
         {
             if (food.Quantity + TotalQuantity() > Limit)
@@ -68,6 +82,12 @@ namespace ScavengerWorld.World.Foods
         public override bool ShouldRemove()
         {
             return false;
+        }
+
+        public override object Clone()
+        {
+            var copy = new FoodStorage(this);
+            return copy;
         }
     }
 }

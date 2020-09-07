@@ -10,8 +10,8 @@ namespace ScavengerWorld.World.Markers
 {
     class ExponentialDecayMarker : Marker
     {
-        public ExponentialDecayMarker(SensoryDisplay display, Unit owner, double duration, double decayRate) : 
-            base(display, owner, duration, decayRate) 
+        public ExponentialDecayMarker(SensoryDisplay display, Guid ownerId, double duration, double decayRate) : 
+            base(display, ownerId, duration, decayRate) 
         { }
 
         public override void Step(int timeStep)

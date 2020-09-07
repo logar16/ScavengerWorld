@@ -6,7 +6,7 @@ namespace ScavengerWorld.World.Foods
     public class Food : WorldObject, IDiscoverable, ISteppable
     {
         public SensoryDisplay Display { get; protected set; }
-        public FoodStorage Storage { get; set; }
+        //public FoodStorage Storage { get; set; }   //Not sure if the food needs to know where it is.  Maybe someday...
 
         public int Quantity { get; private set; }
 
@@ -58,9 +58,9 @@ namespace ScavengerWorld.World.Foods
 
         public void Step(int timeStep)
         {
-            if (Storage != null)
-                //TODO: Should storage just reduce impact of decay?
-                Decay(timeStep);
+            //if (Storage != null)
+            //TODO: Should storage just reduce impact of decay?
+            Decay(timeStep);
         }
 
         private void Decay(int timeStep)
@@ -72,6 +72,14 @@ namespace ScavengerWorld.World.Foods
                     Quality = (FoodQuality)((int)Quality - 1);
                     ResetHealth();
                 }
+        }
+
+        public override object Clone()
+        {
+            Food copy = (Food)MemberwiseClone();
+            copy.Display = (SensoryDisplay)Display.Clone();
+
+            return copy;
         }
     }
 }

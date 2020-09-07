@@ -10,6 +10,7 @@ namespace ScavengerWorld.Teams
     {
         public int Id { get; }
         public List<Unit> Units { get; }
+        public int UnitCount { get => Units.Count; }
 
         public FoodStorage FoodStorage { get; }
 

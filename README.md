@@ -7,15 +7,16 @@ I will probably do the learning agents in other languages for their tools.
 ## TODOs
 
 1. Test printout to visualize
-1. Create units/teams in a meaningful way
-	1. Different types and distributions pers team
-	1. Location of the units should be based on team starting location
-	1. Food storage should be close to that
-	1. Teams should not be too close to each other
-1. Add WorldState::Clone
+  * Currently works but it would be nice to have more detailed visualization to improve understandability
+1. Configuration and creation for food and items (items low-priority)
 1. Action input handled
+1. `SensoryDisplay` and how distance affects it
+1. Tune configuration for Unit attributes
+1. Finish mimicing the OpenAI gym interface
 1. Test basic hand-crafted AI implementations
 1. Communication Protocol/API
+	* Should external clients request certain units or the whole world state?
 1. Write learning code elsewhere that can decide updates
 	1. Could have multiple sources that are each in charge of a particular team?
 1. Write rendering code elsewhere to make for a more fun game to watch
+1. Eventually optimize (after everything else is in place and if it turns out to be slow)

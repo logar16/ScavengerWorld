@@ -1,12 +1,13 @@
 ﻿using ScavengerWorld.Sensory;
 using ScavengerWorld.Units;
+using System;
 
 namespace ScavengerWorld.World.Markers
 {
     class LinearDecayMarker : Marker
     {
-        public LinearDecayMarker(SensoryDisplay display, Unit owner, double duration, double decayRate) :
-            base(display, owner, duration, decayRate)
+        public LinearDecayMarker(SensoryDisplay display, Guid ownerId, double duration, double decayRate) :
+            base(display, ownerId, duration, decayRate)
         { }
 
         public override void Step(int timeStep)

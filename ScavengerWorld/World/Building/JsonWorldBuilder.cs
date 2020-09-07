@@ -40,9 +40,36 @@ namespace ScavengerWorld.World.Building
             State.Ambience = ParseAmbiance(config);
             State.Geography = ParseGeography(config);
             State.Teams = ParseTeams(config);
-            //state.InanimateObjects
+            State.Food = ParseFood(config);
+            //State.InanimateObjects = ParseItems(config);
 
-            return new FullWorld(State);
+            var world = new FullWorld(State);
+            return world;
+        }
+
+        private List<WorldObject> ParseItems(JObject config)
+        {
+            throw new NotImplementedException();
+        }
+
+        private List<Food> ParseFood(JObject config)
+        {
+            config = config.Value<JObject>("food");
+            var ratio = config.Value<double>("ratio");
+            var count = (State.TotalUnits * ratio) + 1;
+
+            var size = config.Value<int>("averageSize");
+            var quality = Food.FoodQuality.EXCELLENT;
+            Enum.TryParse(config.Value<string>("averageQuality"), out quality);
+
+            var foods = new List<Food>();
+            for (int i = 0; i < count; i++)
+            {
+                var food = new Food(size, quality);
+                foods.Add(food);
+            }
+
+            return foods;
         }
 
         private List<Team> ParseTeams(JObject config)
@@ -148,13 +175,13 @@ namespace ScavengerWorld.World.Building
         private class Location
         {
             [JsonProperty("x")]
-            int x {get; set; }
+            int X {get; set; }
             [JsonProperty("y")]
-            int y { get; set; }
+            int Y { get; set; }
 
             public Point ToPoint()
             {
-                return new Point(x, y);
+                return new Point(X, Y);
             }
         }
     }

@@ -1,14 +1,29 @@
-﻿using System;
+﻿using Newtonsoft.Json;
+using System;
+using System.ComponentModel;
 
 namespace ScavengerWorld.Sensory
 {
-    public class SensoryFeature
+    public class SensoryFeature: ICloneable
     {
-        private double InitialStrength;
+        [JsonProperty("strength")]
+        [DefaultValue(0)]
         public double Strength { get; private set; }
+        private double InitialStrength;
 
-        public SensoryFeature(double strength)
+        /// <summary>
+        /// Indicates a particular value for the sensory feature.  
+        /// Currently arbitrary, but could be 0 = black, 1 = red, 2 = blue, 3 = green, etc.
+        /// </summary>
+        [JsonProperty("value")]
+        [DefaultValue(0)]
+        public double Value { get; private set; }
+
+        public static readonly SensoryFeature NONE = new SensoryFeature(0, 0);
+
+        public SensoryFeature(double value, double strength)
         {
+            Value = value;
             Strength = InitialStrength = strength;
         }
 
@@ -16,6 +31,11 @@ namespace ScavengerWorld.Sensory
         {
             Strength = InitialStrength * ratio;
             return Strength;
+        }
+
+        public object Clone()
+        {
+            return MemberwiseClone();
         }
     }
 }

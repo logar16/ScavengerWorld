@@ -1,4 +1,5 @@
 ﻿using ScavengerWorld.Teams;
+using ScavengerWorld.World.Foods;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -11,12 +12,16 @@ namespace ScavengerWorld.World
         public AmbientEnvironment Ambience { get; internal set; }
         public Geography Geography { get; internal set; }
         public List<Team> Teams { get; internal set; }
-        public List<WorldObject> InanimateObjects;
+        public int TotalUnits { get { return Teams.Sum(t => t.UnitCount); } }
+
+        public List<Food> Food { get; internal set; }
+        public List<WorldObject> InanimateObjects { get; internal set; }
         //private List<WorldObject> DestroyedObjects;
 
         public WorldState()
         {
             Teams = new List<Team>();
+            Food = new List<Food>();
             InanimateObjects = new List<WorldObject>();
         }
 
@@ -31,6 +36,12 @@ namespace ScavengerWorld.World
             {
                 var copy = new Team(team);
                 other.Teams.Add(copy);
+            }
+
+            other.Food = new List<Food>();
+            foreach (var food in Food)
+            {
+                other.Food.Add((Food)food.Clone());
             }
             
             other.InanimateObjects = new List<WorldObject>();

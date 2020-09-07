@@ -15,10 +15,8 @@ namespace ScavengerWorld.World
 
         public FullWorld(WorldState start)
         {
-            //TODO: Enable this when Cloning works
-            //State = start.Clone();    
             State = start;
-            //Initial = start.Clone();
+            Initial = State.Clone();
         }
 
         public WorldState Step(UnitActionCollection actionsToTake, int timeSteps=1)

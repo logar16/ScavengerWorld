@@ -33,7 +33,9 @@
     }
   ],
   "food": {
-
+    "ratio": 2,
+    "averageSize": 10,
+    "averageQuality": "POOR"
   },
   "inatimateObjects": {
     "items": [

@@ -32,10 +32,7 @@ namespace ScavengerWorld.World
 
         public abstract bool ShouldRemove();
 
-        public object Clone()
-        {
-            return MemberwiseClone();
-        }
+        public abstract object Clone();
 
         public override string ToString()
         {

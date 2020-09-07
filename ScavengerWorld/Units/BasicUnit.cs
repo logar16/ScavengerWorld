@@ -73,5 +73,15 @@ namespace ScavengerWorld.Units
             Health -= attack;
         }
 
+        public override object Clone()
+        {
+            BasicUnit copy = (BasicUnit)base.Clone();
+            copy.FoodSupply = new List<Food>();
+            foreach (var food in FoodSupply)
+            {
+                copy.FoodSupply.Add((Food)food.Clone());
+            }
+            return copy;
+        }
     }
 }
