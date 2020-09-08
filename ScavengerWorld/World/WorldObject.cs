@@ -1,6 +1,7 @@
 ﻿using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
+using System.Drawing;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -44,7 +45,9 @@ namespace ScavengerWorld.World
 
         public double DistanceTo(Point point)
         {
-            return Point.Subtract(Location, point).Length;
+            var xdiff = Math.Pow(Location.X - point.X, 2);
+            var ydiff = Math.Pow(Location.Y - point.Y, 2);
+            return Math.Sqrt(xdiff + ydiff);
         }
 
         public virtual void TakeDamage(int damage)
