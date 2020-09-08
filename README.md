@@ -20,12 +20,17 @@ Units can take the following actions
 | Give    | GUID of object to give and GUID of receiver (unit or storage) |
 | Attack  | GUID of object to attack                                      |
 
+A note on giving, it can be used to give to units that don't necessarily want the item 
+(I don't have a good mechanism for them deciding if they want the item in that same "turn").
+Giving is also how the unit can drop off food into the food storage area.
+
 ## TODOs
 
 1. Test printout to visualize
-  * Currently works but it would be nice to have more detailed visualization to improve understandability
-1. Action input handled
+	- Currently works but it would be nice to have more detailed visualization to improve understandability
+1. Write tests for unit actions
 1. `SensoryDisplay` and how distance affects it
+	- Keep in mind how this will be communicated to agents
 1. Tune configuration for Unit attributes
 1. Configuration and creation for items (low-priority)
 1. Finish mimicing the OpenAI gym interface
