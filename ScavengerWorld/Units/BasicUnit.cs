@@ -1,4 +1,6 @@
 ﻿using ScavengerWorld.Teams;
+using ScavengerWorld.Units.Actions;
+using ScavengerWorld.World;
 using ScavengerWorld.World.Foods;
 using System;
 using System.Collections.Generic;
@@ -10,6 +12,7 @@ namespace ScavengerWorld.Units
     {
         public double GatherRate { get; protected set; }
         public double GatherLimit { get; protected set; }
+        
         private List<Food> FoodSupply;
 
         public int TotalFoodQuantity
@@ -22,6 +25,22 @@ namespace ScavengerWorld.Units
         public BasicUnit()
         {
             FoodSupply = new List<Food>();
+        }
+
+        public override bool CanAttemptAction(UnitAction action)
+        {
+            if (base.CanAttemptAction(action))
+                return true;
+
+            if (action is TransferAction transfer)
+            {
+                var id = transfer.ObjectId;
+                var obj = FoodSupply.FirstOrDefault(f => f.Id == id);
+                return obj != null;
+            }
+            
+
+            return false;
         }
 
         public bool Gather(Food food)

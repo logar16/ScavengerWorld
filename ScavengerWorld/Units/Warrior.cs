@@ -6,36 +6,32 @@ namespace ScavengerWorld.Units
 {
     class Warrior: BasicUnit, IItemWielder
     {
-        public Warrior()
+        private Item CurrentItem;
+
+        public bool PickUp(Item item)
         {
-            Health = 40;
-            HealthMax = Health;
-            AttackLevel = 10;
-            Speed = 3;
-            LineOfSight = 5;
-            GatherRate = 1;
-            GatherLimit = 1;
-            
+            CurrentItem = item;
+            return true;
         }
 
-        public bool PickUpItem(Item item)
+        public Item DropItem()
         {
-            return false;
-        }
-
-        public void DropItem()
-        {
-            throw new NotImplementedException();
-        }
-
-        public override void Step(int timeStep)
-        {
-            throw new NotImplementedException();
+            Item dropped = CurrentItem;
+            CurrentItem = null;
+            return dropped;
         }
 
         public override bool CanAttemptAction(UnitAction action)
         {
-            throw new NotImplementedException();
+            if (base.CanAttemptAction(action))
+                return true;
+
+            if (action is TransferAction transfer)
+            {
+                return CurrentItem?.Id == transfer.ObjectId;
+            }
+
+            return false;
         }
     }
 }

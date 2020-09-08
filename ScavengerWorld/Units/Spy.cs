@@ -9,22 +9,7 @@ namespace ScavengerWorld.Units
 {
     public class Spy : BasicUnit
     {
-        public Spy() : base()
-        {
-            Health = 35;
-            AttackLevel = 5;
-            Speed = 4;
-            LineOfSight = 7;
-        }
-
-        public override void Step(int timeStep)
-        {
-            throw new NotImplementedException();
-        }
-
-        public override bool CanAttemptAction(UnitAction action)
-        {
-            throw new NotImplementedException();
-        }
+        //TODO: Any special abilities should be defined here
+        //  Perhaps an ability for stealing from other units?
     }
 }

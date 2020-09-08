@@ -8,15 +8,6 @@ namespace ScavengerWorld.Units
     /// </summary>
     public class Monster : Unit
     {
-
-        public override void Step(int timeStep)
-        {
-            throw new NotImplementedException();
-        }
-
-        public override bool CanAttemptAction(UnitAction action)
-        {
-            throw new NotImplementedException();
-        }
+        //TODO: Any special abilities should be defined here
     }
 }

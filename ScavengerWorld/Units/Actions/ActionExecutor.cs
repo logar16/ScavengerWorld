@@ -58,7 +58,7 @@ namespace ScavengerWorld.Units.Actions
                     GiveAway(unit, give);
                     break;
                 case TransferAction transfer:
-                    TransferItem(unit, transfer);
+                    ExecuteTransfer(unit, transfer);
                     break;
                 case UnitAction noop:
                     // TODO: we can record metrics for each type of action, otherwise this does nothing.
@@ -75,7 +75,7 @@ namespace ScavengerWorld.Units.Actions
             throw new NotImplementedException();
         }
 
-        private void TransferItem(Unit unit, TransferAction transfer)
+        private void ExecuteTransfer(Unit unit, TransferAction transfer)
         {
             throw new NotImplementedException();
         }

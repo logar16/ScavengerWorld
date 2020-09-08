@@ -36,9 +36,15 @@ namespace ScavengerWorld.Units
             return Health < 0;
         }
 
-        public abstract void Step(int timeStep);
+        public virtual void Step(int timeStep)
+        {
+            //Nothing to do as of now...
+        }
 
-        public abstract bool CanAttemptAction(UnitAction action);
+        public virtual bool CanAttemptAction(UnitAction action)
+        {
+            return action == UnitAction.NOOP || action is AttackAction;
+        }
 
         public void Attack(WorldObject target)
         {

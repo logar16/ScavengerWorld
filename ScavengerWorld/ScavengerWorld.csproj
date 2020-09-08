@@ -75,7 +75,7 @@
     <Compile Include="Units\BasicUnit.cs" />
     <Compile Include="Teams\Team.cs" />
     <Compile Include="Units\Gatherer.cs" />
-    <Compile Include="Units\IItemWielder.cs" />
+    <Compile Include="Units\Interfaces\IItemWielder.cs" />
     <Compile Include="Units\Monster.cs" />
     <Compile Include="Sensory\SensoryDisplay.cs" />
     <Compile Include="Sensory\SensoryFeature.cs" />

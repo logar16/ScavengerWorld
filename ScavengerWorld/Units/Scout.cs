@@ -9,23 +9,6 @@ namespace ScavengerWorld.Units
 {
     public class Scout : BasicUnit
     {
-        public Scout()
-        {
-            Health = 20;
-            AttackLevel = 3;
-            Speed = 7;
-            LineOfSight = 10;
-        }
-
-        public override void Step(int timeStep)
-        {
-            throw new NotImplementedException();
-        }
-
-        public override bool CanAttemptAction(UnitAction action)
-        {
-            throw new NotImplementedException();
-        }
-
+        //TODO: Any special abilities should be defined here
     }
 }

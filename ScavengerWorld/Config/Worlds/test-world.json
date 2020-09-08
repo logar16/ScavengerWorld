@@ -1,5 +1,10 @@
 {
   "unitConfig": "Config/Units/unit-stats.json",
+  
+  "ambience": {
+    "stepsPerSeason": 300,
+    "stepsPerDay": 10
+  },
 
   "geography": {
     "width": 20,
@@ -7,10 +12,7 @@
     "ratioWalkable": 0.9,
     "seed": -1
   },
-  "ambience": {
-    "stepsPerSeason": 300,
-    "stepsPerDay": 10
-  },
+  
   "teams": [
     {
       "units": "Config/Teams/monsters.json"
@@ -32,11 +34,13 @@
       }
     }
   ],
+  
   "food": {
     "ratio": 2,
     "averageSize": 10,
     "averageQuality": "POOR"
   },
+  
   "inatimateObjects": {
     "items": [
 
