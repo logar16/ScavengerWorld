@@ -1,4 +1,5 @@
 ﻿using ScavengerWorld.Units.Actions;
+using ScavengerWorld.World;
 using ScavengerWorld.World.Items;
 using System;
 
@@ -8,18 +9,26 @@ namespace ScavengerWorld.Units
     {
         private Item CurrentItem;
 
-        public bool PickUp(Item item)
+        public bool Wield(Item item)
         {
             CurrentItem = item;
             return true;
         }
 
-        public Item DropItem()
+        public override bool Drop(WorldObject obj)
         {
-            Item dropped = CurrentItem;
-            CurrentItem = null;
-            return dropped;
+            if (base.Drop(obj))
+                return true;
+            
+            if (obj is Item item && item == CurrentItem)
+            {
+                CurrentItem = null;
+                return true;
+            }
+
+            return false;
         }
+
 
         public override bool CanAttemptAction(UnitAction action)
         {

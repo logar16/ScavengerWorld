@@ -67,6 +67,11 @@ namespace ScavengerWorld.World
             {
                 return obj;
             }
+
+            var storage = Teams.FirstOrDefault(t => t.FoodStorage.Id == objectId)?.FoodStorage;
+            if (storage != null)
+                return storage;
+
             throw new KeyNotFoundException($"No such GUID in this WorldState: {objectId}");
         }
 

@@ -15,11 +15,10 @@ Units can take the following actions
 |---------|---------------------------------------------------------------|
 | No-op   |                                                               |
 | Move    | Cardinal Direction                                            |
-| Pick Up | GUID of object (item or food)                                 |
-| Drop    | GUID of object                                                |
+| Take    | GUID of object (item or food)                                 |
+| Drop    | GUID of object to drop                                        |
 | Give    | GUID of object to give and GUID of receiver (unit or storage) |
-| Receive | GUID of offered object                                        |
-| Attack  | GUID of object                                                |
+| Attack  | GUID of object to attack                                      |
 
 ## TODOs
 

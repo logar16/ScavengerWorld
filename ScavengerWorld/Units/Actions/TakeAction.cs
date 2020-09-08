@@ -6,12 +6,10 @@ using System.Threading.Tasks;
 
 namespace ScavengerWorld.Units.Actions
 {
-    public abstract class TransferAction : UnitAction
+    public class TakeAction : TransferAction
     {
-        public Guid ObjectId { get; private set; }
-        public TransferAction(Guid objectId)
+        public TakeAction(Guid objectId) : base(objectId)
         {
-            ObjectId = objectId;
         }
     }
 }

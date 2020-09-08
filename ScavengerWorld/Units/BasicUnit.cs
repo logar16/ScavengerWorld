@@ -1,5 +1,6 @@
 ﻿using ScavengerWorld.Teams;
 using ScavengerWorld.Units.Actions;
+using ScavengerWorld.Units.Interfaces;
 using ScavengerWorld.World;
 using ScavengerWorld.World.Foods;
 using System;
@@ -8,7 +9,7 @@ using System.Linq;
 
 namespace ScavengerWorld.Units
 {
-    public abstract class BasicUnit: Unit
+    public abstract class BasicUnit : Unit, ITaker, IDropper
     {
         public double GatherRate { get; protected set; }
         public double GatherLimit { get; protected set; }
@@ -39,6 +40,16 @@ namespace ScavengerWorld.Units
                 return obj != null;
             }
             
+            return false;
+        }
+
+        public bool Take(WorldObject obj)
+        {
+            if (obj is Food food)
+            {
+                Gather(food);
+                return true;
+            }
 
             return false;
         }
@@ -52,29 +63,15 @@ namespace ScavengerWorld.Units
             return true;
         }
 
-        public Food Drop(Food food)
+        public virtual bool Drop(WorldObject obj)
         {
-            return FoodSupply.Remove(food) ? food : null;
+            if (obj is Food food)
+            {
+                DropFood(food);
+            }
+            return false;
         }
 
-        //TODO: should this be changed to drop the largest of this quality?  
-        //Make lots of room fast by dropping a big POOR quality piece
-        public Food Drop(Food.FoodQuality quality)
-        {
-            var min = FoodSupply.Where(food => food.Quality == quality)
-                                .Aggregate((f1, f2) => f1.Quantity < f2.Quantity ? f1 : f2);
-            return Drop(min);
-        }
-
-        /// <summary>
-        /// Drops the least effective piece of food
-        /// </summary>
-        /// <returns></returns>
-        public Food Drop()
-        {
-            Food min = FoodSupply.Aggregate((f1, f2) => f1.Effectiveness < f2.Effectiveness ? f1 : f2);
-            return Drop(min);
-        }
 
         public void Eat()
         {
@@ -87,11 +84,34 @@ namespace ScavengerWorld.Units
             Health = Math.Min(Health + healthPoints, HealthMax);
         }
 
-        public override void Injure(int damage)
+
+        #region SpecialDropFoodMethods
+
+        public Food DropFood(Food food)
         {
-            base.Injure(damage);
-            //TODO: Record stats
+            return FoodSupply.Remove(food) ? food : null;
         }
+
+        //TODO: should this be changed to drop the largest of this quality?  
+        //Make lots of room fast by dropping a big POOR quality piece
+        public Food DropFood(Food.FoodQuality quality)
+        {
+            var min = FoodSupply.Where(food => food.Quality == quality)
+                                .Aggregate((f1, f2) => f1.Quantity < f2.Quantity ? f1 : f2);
+            return DropFood(min);
+        }
+
+        /// <summary>
+        /// Drops the least effective piece of food
+        /// </summary>
+        /// <returns></returns>
+        public Food DropFood()
+        {
+            Food min = FoodSupply.Aggregate((f1, f2) => f1.Effectiveness < f2.Effectiveness ? f1 : f2);
+            return DropFood(min);
+        }
+
+        #endregion SpecialDropFoodMethods
 
         public override object Clone()
         {
@@ -103,5 +123,7 @@ namespace ScavengerWorld.Units
             }
             return copy;
         }
+
+        
     }
 }

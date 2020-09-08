@@ -24,7 +24,7 @@ namespace ScavengerWorld.Units.Actions
 
         public UnitAction GetAction(Unit unit)
         {
-            return Actions.ContainsKey(unit.Id) ? Actions[unit.Id] : UnitAction.NOOP;
+            return Actions.ContainsKey(unit.Id) ? Actions[unit.Id] : new NoopAction();
         }
 
         public void Reset()
@@ -36,7 +36,7 @@ namespace ScavengerWorld.Units.Actions
         {
             foreach (var unit in units)
             {
-                AddAction(unit.Id, UnitAction.NOOP);
+                AddAction(unit.Id, new NoopAction());
             }
         }
     }

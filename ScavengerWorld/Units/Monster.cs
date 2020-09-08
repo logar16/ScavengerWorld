@@ -1,10 +1,12 @@
 ﻿using ScavengerWorld.Units.Actions;
+using ScavengerWorld.World;
 using System;
 
 namespace ScavengerWorld.Units
 {
     /// <summary>
-    /// A unit which roams about, attacking other units
+    /// A unit which roams about, attacking other units.
+    /// Should probably be a base class for different types of monsters with special abilities
     /// </summary>
     public class Monster : Unit
     {

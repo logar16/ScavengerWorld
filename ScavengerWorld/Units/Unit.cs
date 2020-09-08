@@ -7,7 +7,7 @@ using System;
 
 namespace ScavengerWorld.Units
 {
-    public abstract class Unit: WorldObject, IDiscoverable, ISteppable, ICloneable
+    public abstract class Unit : WorldObject, IDiscoverable, ISteppable, ICloneable
     {
         [JsonProperty("attack")]
         public int AttackLevel { get; protected set; }
@@ -43,17 +43,22 @@ namespace ScavengerWorld.Units
 
         public virtual bool CanAttemptAction(UnitAction action)
         {
-            return action == UnitAction.NOOP || action is AttackAction;
+            return action is NoopAction || action is AttackAction;
         }
 
-        public void Attack(WorldObject target)
+        public void Attack()
         {
             //TODO: record stat
-            target.Injure(AttackLevel);
+        }
+
+        public override void TakeDamage(int damage)
+        {
+            base.TakeDamage(damage);
+            //TODO: Record stats
         }
 
 
-
+        #region HelperFunctions
         public override string ToString()
         {
             return $"{IdPrefix}: {{ Unit: {GetType().Name}, Location: ({Location}), {Details()} }}";
@@ -70,5 +75,7 @@ namespace ScavengerWorld.Units
             copy.Display = (SensoryDisplay)Display.Clone();
             return copy;
         }
+
+        #endregion HelperFunctions
     }
 }

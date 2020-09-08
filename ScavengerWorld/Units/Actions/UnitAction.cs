@@ -1,7 +1,12 @@
-﻿namespace ScavengerWorld.Units.Actions
+﻿using System;
+
+namespace ScavengerWorld.Units.Actions
 {
-    public class UnitAction
+    public abstract class UnitAction
     {
-        internal static readonly UnitAction NOOP = new UnitAction();
+    }
+
+    public class NoopAction : UnitAction
+    {
     }
 }

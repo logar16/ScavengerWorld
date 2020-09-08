@@ -4,7 +4,6 @@ namespace ScavengerWorld.Units
 {
     interface IItemWielder
     {
-        bool PickUp(Item item);
-        Item DropItem();
+        bool Wield(Item item);
     }
 }

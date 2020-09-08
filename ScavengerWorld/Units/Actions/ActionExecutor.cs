@@ -1,4 +1,5 @@
-﻿using ScavengerWorld.World;
+﻿using ScavengerWorld.Units.Interfaces;
+using ScavengerWorld.World;
 using Serilog;
 using System;
 using System.Collections.Generic;
@@ -30,7 +31,7 @@ namespace ScavengerWorld.Units.Actions
                 if (allUnits.TryGetValue(guid, out Unit unit))
                 {
                     if (!unit.CanAttemptAction(action))
-                        action = UnitAction.NOOP; //Defaults to no-op
+                        action = new NoopAction(); //Defaults to no-op
 
                     try
                     {
@@ -55,29 +56,60 @@ namespace ScavengerWorld.Units.Actions
                     ExecuteAttack(unit, attack.TargetId);
                     break;
                 case GiveAction give:
-                    GiveAway(unit, give);
+                    if (unit is IDropper dropper)
+                        GiveAway(dropper, give);
+                    else
+                        throw new BadActionException($"Unit {unit} does not implement the IDropper interface");
                     break;
-                case TransferAction transfer:
-                    ExecuteTransfer(unit, transfer);
+                case TakeAction take:
+                    if (unit is ITaker taker)
+                        ExecuteTake(taker, take);
+                    else
+                        throw new BadActionException($"Unit {unit} does not implement the ITaker interface");
                     break;
-                case UnitAction noop:
-                    // TODO: we can record metrics for each type of action, otherwise this does nothing.
+                case NoopAction noop:
+                    // TODO: we can record metrics for each type of action, otherwise this does avoid the default exception.
                     break;
                 default:
                     throw new BadActionException($"No matching action implemented for {action}");
             }
         }
 
-
-        //TODO: Implement the GiveAway and TransferItem actions
-        private void GiveAway(Unit unit, GiveAction give)
+        private void ExecuteTake(ITaker unit, TakeAction take)
         {
-            throw new NotImplementedException();
+            var obj = State.GetObject(take.ObjectId);
+            if (obj == null)
+                throw new BadActionException($"Unit {unit} cannot take a non-existing object {take.ObjectId}");
+            unit.Take(obj);
         }
 
-        private void ExecuteTransfer(Unit unit, TransferAction transfer)
+        private void GiveAway(IDropper unit, GiveAction give)
         {
-            throw new NotImplementedException();
+            var recipient = State.GetObject(give.Recepient);
+            if (!(recipient is IReceiver receiver))
+            {
+                ExecuteDrop(unit, new DropAction(give.ObjectId));   //Transfer to a non-receiver is a Drop
+                return;
+            }
+
+            if (!IsAdjacent((Unit)unit, recipient))
+                throw new BadActionException($"Unit {unit} not adjacent to intended recipient of transfer {recipient}");
+            
+            var obj = State.GetObject(give.ObjectId);
+            if (obj == null)
+                throw new BadActionException($"Unit {unit} cannot give away a non-existing object {give.ObjectId}");
+
+            unit.Drop(obj);
+            receiver.Receive(obj);
+        }
+
+        private void ExecuteDrop(IDropper unit, DropAction drop)
+        {
+            var obj = State.GetObject(drop.ObjectId);
+            if (obj == null)
+                throw new BadActionException($"Unit {unit} cannot give away a non-existing object {drop.ObjectId}");
+
+            unit.Drop(obj);
         }
 
         private void ExecuteAttack(Unit unit, Guid targetId)
@@ -86,7 +118,8 @@ namespace ScavengerWorld.Units.Actions
             if (!IsAdjacent(unit, target))
                 throw new BadActionException($"Unit {unit} not adjacent to intended target of attack {target}");
 
-            unit.Attack(target);
+            unit.Attack();
+            target.TakeDamage(unit.AttackLevel);
             if (target.ShouldRemove())
             {
                 State.Destroy(target);

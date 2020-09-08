@@ -47,7 +47,7 @@ namespace ScavengerWorld.World
             return Point.Subtract(Location, point).Length;
         }
 
-        public virtual void Injure(int damage)
+        public virtual void TakeDamage(int damage)
         {
             Health -= damage;
         }
