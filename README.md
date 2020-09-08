@@ -26,9 +26,11 @@ Giving is also how the unit can drop off food into the food storage area.
 
 ## TODOs
 
+1. Add `Takeable` interface which applies to `Food` and `Item` objects.
+	* Have an option to point to the GUID of the current holder or test if there is a holder, so we don't accidentally share an object
 1. Test printout to visualize
 	- Currently works but it would be nice to have more detailed visualization to improve understandability
-1. Write tests for unit actions
+1. Write tests for unit actions and units themselves
 1. `SensoryDisplay` and how distance affects it
 	- Keep in mind how this will be communicated to agents
 1. Tune configuration for Unit attributes
