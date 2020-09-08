@@ -36,8 +36,8 @@ Giving is also how the unit can drop off food into the food storage area.
 1. Finish mimicing the OpenAI gym interface
 1. Test basic hand-crafted AI implementations
 1. Communication Protocol/API
-	* Should external clients request certain units or the whole world state?
+	- Should external clients request certain units or the whole world state?
 1. Write learning code elsewhere that can decide updates
-	1. Could have multiple sources that are each in charge of a particular team?
+	- Could have multiple sources that are each in charge of a particular team?
 1. Write rendering code elsewhere to make for a more fun game to watch
 1. Eventually optimize (after everything else is in place and if it turns out to be slow)
