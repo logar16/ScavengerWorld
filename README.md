@@ -21,8 +21,10 @@ Units can take the following actions
 | Attack  | GUID of object to attack                                      |
 
 A note on giving, it can be used to give to units that don't necessarily want the item 
-(I don't have a good mechanism for them deciding if they want the item in that same "turn").
-Giving is also how the unit can drop off food into the food storage area.
+(I don't have a good mechanism for them deciding if they want the item in that same "turn").  This could be fun if units give bad gifts (items that do damage to the wielder or low-grade food)
+Giving is also how the unit can drop off food into the food storage area.  Giving when there is nothing to give to results in a drop.
+
+If the unit is holding an item, the item can influence whatever action the unit takes for better or for worse.
 
 ## TODOs
 

@@ -8,7 +8,7 @@ using System.Text;
 
 namespace ScavengerWorld.World
 {
-    public class WorldState : ISteppable
+    public class WorldState : IState, ISteppable
     {
         public AmbientEnvironment Ambience { get; internal set; }
         public Geography Geography { get; internal set; }
@@ -18,13 +18,16 @@ namespace ScavengerWorld.World
 
         public Dictionary<Guid, Food> Food { get; internal set; }
         public Dictionary<Guid, WorldObject> InanimateObjects { get; internal set; }
-        //private List<WorldObject> DestroyedObjects;
+        
+        private List<WorldObject> DestroyedObjects;
 
         public WorldState()
         {
             Teams = new List<Team>();
             Food = new Dictionary<Guid, Food>();
             InanimateObjects = new Dictionary<Guid, WorldObject>();
+
+            DestroyedObjects = new List<WorldObject>();
         }
 
         internal WorldState Clone()
@@ -48,12 +51,13 @@ namespace ScavengerWorld.World
             Ambience.Step(timeStep);
         }
 
-        public void GetUnit(Guid unitGuid)
+        public Unit GetUnit(Guid unitGuid)
         {
-
+            AllUnits.TryGetValue(unitGuid, out Unit unit);
+            return unit;
         }
 
-        internal WorldObject GetObject(Guid objectId)
+        public WorldObject FindObject(Guid objectId)
         {
             if (AllUnits.TryGetValue(objectId, out Unit unit))
             {
@@ -74,6 +78,16 @@ namespace ScavengerWorld.World
 
             throw new KeyNotFoundException($"No such GUID in this WorldState: {objectId}");
         }
+
+        public void Destroy(WorldObject obj)
+        {
+            //TODO: The object is known to be destroyed, take it out immediately
+            throw new NotImplementedException();
+        }
+
+
+
+        #region Printing
 
         public override string ToString()
         {
@@ -97,12 +111,6 @@ namespace ScavengerWorld.World
 
             builder.AppendLine("}");
             return builder.ToString();
-        }
-
-        internal void Destroy(WorldObject target)
-        {
-            //TODO: The object is known to be destroyed, take it out immediately
-            throw new NotImplementedException();
         }
 
         private string DrawUnitMap()
@@ -136,5 +144,7 @@ namespace ScavengerWorld.World
             }
             return builder.ToString();
         }
+
+        #endregion Printing
     }
 }

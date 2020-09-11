@@ -20,6 +20,11 @@ namespace ScavengerWorld.World
 
         private Random Random;
 
+        protected Geography()
+        {
+
+        }
+
         public Geography(int width, int height) : this(width, height, 1.0) { }
 
         public Geography(int width, int height, double ratioWalkable, int seed=-1)
@@ -62,7 +67,7 @@ namespace ScavengerWorld.World
             return MemberwiseClone();
         }
 
-        internal Terrain GetTerrainAt(Point location)
+        public virtual Terrain GetTerrainAt(Point location)
         {
             return Space[(int)location.Y, (int)location.X];
         }

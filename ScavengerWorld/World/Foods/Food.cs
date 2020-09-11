@@ -3,10 +3,11 @@ using System;
 
 namespace ScavengerWorld.World.Foods
 {
-    public class Food : WorldObject, IDiscoverable, ISteppable
+    public class Food : WorldObject, IDiscoverable, ISteppable, ITransferable
     {
         public SensoryDisplay Display { get; protected set; }
         //public FoodStorage Storage { get; set; }   //Not sure if the food needs to know where it is.  Maybe someday...
+        Guid ITransferable.Owner { get; set; }
 
         public int Quantity { get; private set; }
 
@@ -81,5 +82,6 @@ namespace ScavengerWorld.World.Foods
 
             return copy;
         }
+
     }
 }

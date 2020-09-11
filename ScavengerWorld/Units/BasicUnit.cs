@@ -43,7 +43,7 @@ namespace ScavengerWorld.Units
             return false;
         }
 
-        public bool Take(WorldObject obj)
+        public virtual bool Take(ITransferable obj)
         {
             if (obj is Food food)
             {
@@ -63,11 +63,12 @@ namespace ScavengerWorld.Units
             return true;
         }
 
-        public virtual bool Drop(WorldObject obj)
+        public virtual bool Drop(ITransferable obj)
         {
             if (obj is Food food)
             {
                 DropFood(food);
+                return true;
             }
             return false;
         }

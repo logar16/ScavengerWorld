@@ -1,13 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace ScavengerWorld.World
+﻿namespace ScavengerWorld.World
 {
-    interface IReceiver
+    public interface IReceiver
     {
-        bool Receive(WorldObject obj);
+        bool Receive(ITransferable obj);
     }
 }

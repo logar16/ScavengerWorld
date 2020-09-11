@@ -1,14 +1,9 @@
 ﻿using ScavengerWorld.World;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace ScavengerWorld.Units.Interfaces
 {
-    interface IDropper
+    public interface IDropper
     {
-        bool Drop(WorldObject obj);
+        bool Drop(ITransferable obj);
     }
 }

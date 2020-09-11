@@ -3,15 +3,14 @@ using ScavengerWorld.World;
 using Serilog;
 using System;
 using System.Drawing;
-using System.Windows;
 
 namespace ScavengerWorld.Units.Actions
 {
     public class ActionExecutor
     {
         private Random Random;
-        private WorldState State;
-        public ActionExecutor(WorldState state)
+        private IState State;
+        public ActionExecutor(IState state)
         {
             State = state;
             Random = new Random();
@@ -37,6 +36,7 @@ namespace ScavengerWorld.Units.Actions
                     catch (BadActionException ex)
                     {
                         Log.Error("Failed to execute action due to the following error: ", ex);
+                        throw;
                     }
                 }
             }
@@ -52,9 +52,13 @@ namespace ScavengerWorld.Units.Actions
                 case AttackAction attack:
                     ExecuteAttack(unit, attack.TargetId);
                     break;
-                case GiveAction give:
+                case DropAction drop:
                     if (unit is IDropper dropper)
-                        GiveAway(dropper, give);
+                        ExecuteDrop(dropper, drop);
+                    break;
+                case GiveAction give:
+                    if (unit is IDropper dropper1)
+                        GiveAway(dropper1, give);
                     else
                         throw new BadActionException($"Unit {unit} does not implement the IDropper interface");
                     break;
@@ -64,7 +68,7 @@ namespace ScavengerWorld.Units.Actions
                     else
                         throw new BadActionException($"Unit {unit} does not implement the ITaker interface");
                     break;
-                case NoopAction noop:
+                case NoopAction _:
                     // TODO: we can record metrics for each type of action, otherwise this does avoid the default exception.
                     break;
                 default:
@@ -72,46 +76,76 @@ namespace ScavengerWorld.Units.Actions
             }
         }
 
-        private void ExecuteTake(ITaker unit, TakeAction take)
+        private void ExecuteTake(ITaker unit, TakeAction action)
         {
-            var obj = State.GetObject(take.ObjectId);
+            var obj = State.FindObject(action.ObjectId);
             if (obj == null)
-                throw new BadActionException($"Unit {unit} cannot take a non-existing object {take.ObjectId}");
-            unit.Take(obj);
+                throw new BadActionException($"Unit {unit} cannot take a non-existing object {action.ObjectId}");
+
+            if (obj is ITransferable transferable)
+            {
+                if (transferable.HasOwner)
+                    throw new BadActionException($"Unit {unit} cannot take a currently-owned object {action.ObjectId}");
+
+                unit.Take(transferable);
+            }
+            else
+            {
+                throw new BadActionException($"Unit {unit} cannot take a non-transferable object {action.ObjectId}");
+            }
         }
 
-        private void GiveAway(IDropper unit, GiveAction give)
+        private void GiveAway(IDropper donor, GiveAction action)
         {
-            var recipient = State.GetObject(give.Recepient);
-            if (!(recipient is IReceiver receiver))
+            var recipient = State.FindObject(action.Recepient);
+            if (!(recipient is IReceiver receiver) || !IsAdjacent((Unit)donor, recipient))
             {
-                ExecuteDrop(unit, new DropAction(give.ObjectId));   //Transfer to a non-receiver is a Drop
+                Drop(donor, action.ObjectId);   //Transfer to a non-receiver is a Drop
                 return;
             }
 
-            if (!IsAdjacent((Unit)unit, recipient))
-                throw new BadActionException($"Unit {unit} not adjacent to intended recipient of transfer {recipient}");
-            
-            var obj = State.GetObject(give.ObjectId);
-            if (obj == null)
-                throw new BadActionException($"Unit {unit} cannot give away a non-existing object {give.ObjectId}");
+            var transferable = Drop(donor, action.ObjectId);
+            //Will be null if Dropper could not drop an item
+            if (transferable == null)
+                return;
 
-            unit.Drop(obj);
-            receiver.Receive(obj);
+            if (receiver.Receive(transferable))
+                transferable.TransferTo(recipient.Id);
+            //else the object stays on the ground
         }
 
-        private void ExecuteDrop(IDropper unit, DropAction drop)
+        private void ExecuteDrop(IDropper dropper, DropAction action)
         {
-            var obj = State.GetObject(drop.ObjectId);
-            if (obj == null)
-                throw new BadActionException($"Unit {unit} cannot give away a non-existing object {drop.ObjectId}");
+            Drop(dropper, action.ObjectId);
+        }
 
-            unit.Drop(obj);
+        private ITransferable Drop(IDropper dropper, Guid objId)
+        {
+            var obj = State.FindObject(objId);
+            if (obj == null)
+                throw new BadActionException($"Unit {dropper} cannot give away a non-existing object {obj}");
+
+            if (obj is ITransferable transferable)
+            {
+                if (transferable.Owner != ((Unit)dropper).Id)
+                    throw new BadActionException($"Unit {dropper} cannot give away the object {obj} because it does not posses it");
+
+                if (!dropper.Drop(transferable))
+                    return null;
+
+                transferable.Drop();
+            }
+            else
+            {
+                throw new BadActionException($"Unit {dropper} cannot drop a non-transferable object {obj}");
+            }
+
+            return transferable;
         }
 
         private void ExecuteAttack(Unit unit, Guid targetId)
         {
-            var target = State.GetObject(targetId);
+            var target = State.FindObject(targetId);
             if (!IsAdjacent(unit, target))
                 throw new BadActionException($"Unit {unit} not adjacent to intended target of attack {target}");
 
@@ -151,17 +185,16 @@ namespace ScavengerWorld.Units.Actions
 
         private bool IsAdjacent(Unit unit, WorldObject target)
         {
+            if (target == null)
+                return false;
+
             return unit.DistanceTo(target) < 3;
         }
 
+    }
 
-
-        private class BadActionException : Exception
-        {
-            public BadActionException(string message) : base(message)
-            {
-
-            }
-        }
+    public class BadActionException : Exception
+    {
+        public BadActionException(string message) : base(message) { }
     }
 }

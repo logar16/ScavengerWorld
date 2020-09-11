@@ -2,8 +2,10 @@
 
 namespace ScavengerWorld.Units
 {
-    interface IItemWielder
+    public interface IItemWielder
     {
         bool Wield(Item item);
+
+        bool HasItem { get; }
     }
 }

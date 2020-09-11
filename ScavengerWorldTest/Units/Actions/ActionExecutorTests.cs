@@ -1,26 +1,40 @@
-﻿using Xunit;
+﻿using Moq;
+using ScavengerWorld.Units;
+using ScavengerWorld.Units.Actions;
+using ScavengerWorld.World;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using Xunit;
 
 namespace ScavengerWorldTest.Units.Actions
 {
     public class ActionExecutorTests
     {
-        [Fact]
-        public void MoveAction_ValidMove_UnitMoved()
+        protected Mock<IState> CreateStateMock(Dictionary<Guid, Unit> units)
         {
-            //TODO: Test with every direction
-            Assert.True(false, "Not ready!");
+            var state = new Mock<IState>();
+            state.Setup(s => s.AllUnits).Returns(units);
+            return state;
         }
 
-        [Fact]
-        public void MoveAction_MoveToBadTerrain_UnitNotMoved()
+        protected Dictionary<Guid, Unit> CreateUnitDictionary(params Mock<Unit>[] units)
         {
-            Assert.True(false, "Not ready!");
+            return units.ToDictionary(unit => unit.Object.Id, unit => unit.Object);
+        }
+
+        protected Mock<Unit> CreateUnit()
+        {
+            var unit = new Mock<Unit>();
+            unit.Setup(u => u.Id).Returns(Guid.NewGuid());
+            unit.Setup(u => u.CanAttemptAction(It.IsAny<UnitAction>())).Returns(true);
+            return unit;
         }
 
         //TODO: Tests for the following cases:
-            // Attack with valid/invalid target
-            // Drop with valid/invalid object
-            // Give with valid/invalid object and valid/invalid recipient
-            // Take with valid/invalid target object (what happens if someone grabs it first?)
+        // Attack with valid/invalid target
+        // Drop with valid/invalid object
+        // Give with valid/invalid object and valid/invalid recipient
+        // Take with valid/invalid target object (what happens if someone grabs it first?)
     }
 }

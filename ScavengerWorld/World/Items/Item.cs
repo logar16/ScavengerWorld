@@ -3,30 +3,12 @@ using System;
 
 namespace ScavengerWorld.World.Items
 {
-    public abstract class Item : WorldObject
+    public abstract class Item : WorldObject, ITransferable
     {
-        public Unit Owner { get; private set; }
+        Guid ITransferable.Owner { get; set; }
+
         public double AttackModifier { get; protected set; }
         protected int RemainingUses { get; set; }
-
-        public bool IsInHand { get => Owner != null; }
-
-        public bool PickUp(Unit owner)
-        {
-            if (IsInHand)
-                return false;
-            
-            Owner = owner;
-            return true;
-        }
-
-        public void Drop()
-        {
-            Owner = null;
-        }
-
-        
-
 
         public override bool ShouldRemove()
         {

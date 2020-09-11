@@ -11,8 +11,8 @@ namespace ScavengerWorld.World
 {
     public abstract class WorldObject : ICloneable
     {
-        public Point Location { get; private set; }
-        public Guid Id { get; private set; }
+        public virtual Point Location { get; private set; }
+        public virtual Guid Id { get; private set; }
         public string IdPrefix { get => Id.ToString().Substring(0, 4); }
 
         [JsonProperty("hp")]
@@ -26,12 +26,12 @@ namespace ScavengerWorld.World
             Location = new Point();
         }
 
-        public void Move(Point direction)
+        public virtual void Move(Point direction)
         {
-            Move((int)direction.X, (int)direction.Y);
+            Move(direction.X, direction.Y);
         }
 
-        public void Move(int xDelta, int yDelta)
+        public virtual void Move(int xDelta, int yDelta)
         {
             var location = Location;
             location.Offset(xDelta, yDelta);
@@ -40,6 +40,9 @@ namespace ScavengerWorld.World
 
         public double DistanceTo(WorldObject other)
         {
+            if (other == null)
+                throw new ArgumentException("Distance cannot be determined from a null input `other`");
+
             return DistanceTo(other.Location);
         }
 
