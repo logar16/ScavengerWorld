@@ -17,5 +17,6 @@ namespace ScavengerWorld.World
 
         WorldObject FindObject(Guid guid);
         void Destroy(WorldObject obj);
+        void Destroy(Guid id);
     }
 }

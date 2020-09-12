@@ -10,7 +10,7 @@ namespace ScavengerWorld.Units
     public abstract class Unit : WorldObject, IDiscoverable, ISteppable, ICloneable
     {
         [JsonProperty("attack")]
-        public int AttackLevel { get; protected set; }
+        public virtual int AttackLevel { get; protected set; }
         
         [JsonProperty("speed")]
         public int Speed { get; protected set; }
@@ -46,6 +46,10 @@ namespace ScavengerWorld.Units
             return action is NoopAction || action is AttackAction;
         }
 
+        /// <summary>
+        /// Called whenever a unit launches an attack.
+        /// Use this to record metrics or otherwise impact the unit
+        /// </summary>
         public void Attack()
         {
             //TODO: record stat

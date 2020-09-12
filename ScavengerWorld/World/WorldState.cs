@@ -85,7 +85,10 @@ namespace ScavengerWorld.World
             throw new NotImplementedException();
         }
 
-
+        public void Destroy(Guid id)
+        {
+            Destroy(FindObject(id));
+        }
 
         #region Printing
 

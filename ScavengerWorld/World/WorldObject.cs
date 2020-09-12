@@ -62,6 +62,15 @@ namespace ScavengerWorld.World
         {
             return Health < 0;
         }
+        
+        /// <summary>
+        /// Will be called when the object is being removed so it can clean up any references
+        /// or record any data it needs before going to the graveyard.
+        /// </summary>
+        public virtual void Remove()
+        {
+            
+        }
 
         public abstract object Clone();
 

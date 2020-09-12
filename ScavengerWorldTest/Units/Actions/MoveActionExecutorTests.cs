@@ -6,6 +6,10 @@ using Xunit;
 
 namespace ScavengerWorldTest.Units.Actions
 {
+    /// <summary>
+    /// Tests to support the movement of units on the map.
+    /// Future day may include units that can move more than one space at a time
+    /// </summary>
     public class MoveActionExecutorTests : ActionExecutorTests
     {
         [Theory]

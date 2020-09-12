@@ -26,8 +26,12 @@ namespace ScavengerWorld.Units.Actions
 
                 if (allUnits.TryGetValue(guid, out Unit unit))
                 {
+                    //If the Unit is technically dead, we will skip it and it should be cleaned up for next round
+                    if (unit.ShouldRemove())
+                        continue;
+
                     if (!unit.CanAttemptAction(action))
-                        action = new NoopAction(); //Defaults to no-op
+                        action = new NoopAction();  //Defaults to no-op
 
                     try
                     {
@@ -36,7 +40,7 @@ namespace ScavengerWorld.Units.Actions
                     catch (BadActionException ex)
                     {
                         Log.Error("Failed to execute action due to the following error: ", ex);
-                        throw;
+                        throw;      //TODO: Do we really want to throw errors here?
                     }
                 }
             }
@@ -82,12 +86,16 @@ namespace ScavengerWorld.Units.Actions
             if (obj == null)
                 throw new BadActionException($"Unit {unit} cannot take a non-existing object {action.ObjectId}");
 
+            if (!IsAdjacent((Unit)unit, obj))
+                throw new BadActionException($"Unit {unit} not adjacent to the object it desires to take {obj}");
+
             if (obj is ITransferable transferable)
             {
                 if (transferable.HasOwner)
                     throw new BadActionException($"Unit {unit} cannot take a currently-owned object {action.ObjectId}");
 
                 unit.Take(transferable);
+                transferable.TransferTo(((Unit)unit).Id);
             }
             else
             {
@@ -101,7 +109,7 @@ namespace ScavengerWorld.Units.Actions
             if (!(recipient is IReceiver receiver) || !IsAdjacent((Unit)donor, recipient))
             {
                 Drop(donor, action.ObjectId);   //Transfer to a non-receiver is a Drop
-                return;
+                return; 
             }
 
             var transferable = Drop(donor, action.ObjectId);
