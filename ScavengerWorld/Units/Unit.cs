@@ -9,9 +9,6 @@ namespace ScavengerWorld.Units
 {
     public abstract class Unit : WorldObject, IDiscoverable, ISteppable, ICloneable
     {
-        [JsonProperty("attack")]
-        public virtual int AttackLevel { get; protected set; }
-        
         [JsonProperty("speed")]
         public int Speed { get; protected set; }
 
@@ -23,17 +20,14 @@ namespace ScavengerWorld.Units
 
         public UnitStats Stats { get; }
 
+        public Guid Team { get; set; }
+
 
         protected Unit()
         {
             Display = new SensoryDisplay();
             Stats = new UnitStats();
             HealthMax = Health;
-        }
-
-        public override bool ShouldRemove()
-        {
-            return Health < 0;
         }
 
         public virtual void Step(int timeStep)
@@ -43,16 +37,7 @@ namespace ScavengerWorld.Units
 
         public virtual bool CanAttemptAction(UnitAction action)
         {
-            return action is NoopAction || action is AttackAction;
-        }
-
-        /// <summary>
-        /// Called whenever a unit launches an attack.
-        /// Use this to record metrics or otherwise impact the unit
-        /// </summary>
-        public void Attack()
-        {
-            //TODO: record stat
+            return action is NoopAction;
         }
 
         public override void TakeDamage(int damage)

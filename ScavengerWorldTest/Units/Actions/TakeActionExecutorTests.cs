@@ -9,6 +9,12 @@ using Xunit;
 
 namespace ScavengerWorldTest.Units.Actions
 {
+    /// <summary>
+    /// Ensure that the unit can actually take the object:
+    ///     - Unit is an ITaker
+    ///     - Object is ITransferable
+    /// Success looks like the unit gaining ownership of the object and the object aware of that
+    /// </summary>
     public class TakeActionExecutorTests : ActionExecutorTests
     {
         [Fact]

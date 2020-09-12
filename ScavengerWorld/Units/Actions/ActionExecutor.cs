@@ -54,11 +54,16 @@ namespace ScavengerWorld.Units.Actions
                     MoveUnit(unit, move.MoveDirection);
                     break;
                 case AttackAction attack:
-                    ExecuteAttack(unit, attack.TargetId);
+                    if (unit is IAttacker attacker)
+                        ExecuteAttack(attacker, attack.TargetId);
+                    else
+                        throw new BadActionException($"Unit {unit} does not implement the IAttacker interface");
                     break;
                 case DropAction drop:
                     if (unit is IDropper dropper)
                         ExecuteDrop(dropper, drop);
+                    else
+                        throw new BadActionException($"Unit {unit} does not implement the IDropper interface");
                     break;
                 case GiveAction give:
                     if (unit is IDropper dropper1)
@@ -142,6 +147,7 @@ namespace ScavengerWorld.Units.Actions
                     return null;
 
                 transferable.Drop();
+                obj.Move(((Unit)dropper).Location);
             }
             else
             {
@@ -151,14 +157,14 @@ namespace ScavengerWorld.Units.Actions
             return transferable;
         }
 
-        private void ExecuteAttack(Unit unit, Guid targetId)
+        private void ExecuteAttack(IAttacker attacker, Guid targetId)
         {
             var target = State.FindObject(targetId);
-            if (!IsAdjacent(unit, target))
-                throw new BadActionException($"Unit {unit} not adjacent to intended target of attack {target}");
+            if (!IsAdjacent((Unit)attacker, target))
+                throw new BadActionException($"Unit {attacker} not adjacent to intended target of attack {target}");
 
-            unit.Attack();
-            target.TakeDamage(unit.AttackLevel);
+            attacker.Attack();
+            target.TakeDamage(attacker.AttackLevel);
             if (target.ShouldRemove())
             {
                 State.Destroy(target);

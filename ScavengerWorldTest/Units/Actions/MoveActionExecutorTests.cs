@@ -8,7 +8,9 @@ namespace ScavengerWorldTest.Units.Actions
 {
     /// <summary>
     /// Tests to support the movement of units on the map.
-    /// Future day may include units that can move more than one space at a time
+    /// Future day may include units that can move more than one space at a time.
+    /// Success is currently defined as able to move one unit in any cardinal direction
+    /// as long as the terrain allows it (not ROUGH).
     /// </summary>
     public class MoveActionExecutorTests : ActionExecutorTests
     {

@@ -32,10 +32,15 @@ If the unit is holding an item, the item can influence whatever action the unit 
 	* Have an option to point to the GUID of the current holder or test if there is a holder, so we don't accidentally share an object
 1. Test printout to visualize
 	- Currently works but it would be nice to have more detailed visualization to improve understandability
-1. Write tests for unit actions and units themselves
-   - Write tests for all actions
-   - Document what the tests are validating for that class 
-1. `SensoryDisplay` and how distance affects it
+2. Write tests for
+    - Individual Units
+    - Food and Items (as needed)
+    - Geography
+    - Ambiance
+    - WorldState
+    - FullWorld
+    - Simulator
+3. `SensoryDisplay` and how distance affects it
 	- Keep in mind how this will be communicated to agents
 1. Tune configuration for Unit attributes
 1. Configuration and creation for items (low-priority)

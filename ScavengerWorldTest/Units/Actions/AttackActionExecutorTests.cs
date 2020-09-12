@@ -1,5 +1,6 @@
 ﻿using Moq;
 using ScavengerWorld.Units.Actions;
+using ScavengerWorld.Units.Interfaces;
 using ScavengerWorld.World;
 using System;
 using System.Collections.Generic;
@@ -19,6 +20,25 @@ namespace ScavengerWorldTest.Units.Actions
     public class AttackActionExecutorTests : ActionExecutorTests
     {
         [Fact]
+        public void Attack_NotAnIAttacker_FailsAction()
+        {
+            //Setup
+            var unit = CreateUnit();
+            var targetId = Guid.NewGuid();
+            
+            var state = CreateStateMock(CreateUnitDictionary(unit));
+            
+            var action = new AttackAction(targetId);
+            UnitActionCollection actions = new UnitActionCollection();
+            actions.AddAction(unit.Object.Id, action);
+
+            var subject = new ActionExecutor(state.Object);
+
+            //Act & Assert      
+            Assert.Throws<BadActionException>(() => subject.Execute(actions));
+        }
+        
+        [Fact]
         public void Attack_NoSuchTarget_FailsAction()
         {
             //Setup
@@ -26,7 +46,6 @@ namespace ScavengerWorldTest.Units.Actions
             var targetId = Guid.NewGuid();
             
             var state = CreateStateMock(CreateUnitDictionary(unit));
-            //state.Setup(s => s.FindObject(targetId)).Returns(target.Object);
 
             var action = new AttackAction(targetId);
             UnitActionCollection actions = new UnitActionCollection();
@@ -66,8 +85,9 @@ namespace ScavengerWorldTest.Units.Actions
         {
             //Setup
             var unit = CreateUnit();
+            var attacker = unit.As<IAttacker>();
             var attack = new Random().Next(1, 10);
-            unit.Setup(u => u.AttackLevel).Returns(attack);
+            attacker.Setup(a => a.AttackLevel).Returns(attack);
             var target = new Mock<WorldObject>();
             var targetId = Guid.NewGuid();
 
@@ -92,8 +112,9 @@ namespace ScavengerWorldTest.Units.Actions
         {
             //Setup
             var unit = CreateUnit();
+            var attacker = unit.As<IAttacker>();
             var attack = new Random().Next(1, 10);
-            unit.Setup(u => u.AttackLevel).Returns(attack);
+            attacker.Setup(a => a.AttackLevel).Returns(attack);
             var target = new Mock<WorldObject>();
             target.Setup(t => t.ShouldRemove()).Returns(true);
             var targetId = Guid.NewGuid();

@@ -13,7 +13,11 @@ namespace ScavengerWorldTest.Units
     ///     - Gather Food
     ///         - If it is lower than limit and not already owned by this unit
     ///     - Drop Food
-    ///         - If it is owned by this unit
+    ///         - If it is owned by this unit (could be for dropping or giving away)
+    ///     - Know actions it can take
+    ///         - Attack, Move
+    ///         - Give/Take/Drop
+    ///         - Noop (Default)
     /// </summary>
     public class BasicUnitTests
     {
@@ -192,16 +196,31 @@ namespace ScavengerWorldTest.Units
         }
 
         [Fact]
+        public void CanAct_Attack_ReturnTrue()
+        {
+            var subject = new BUnit();
+
+            var attack = new AttackAction(Guid.NewGuid());
+            Assert.True(subject.CanAttemptAction(attack));
+        }
+
+        [Fact]
+        public void CanAct_Move_ReturnTrue()
+        {
+            var subject = new BUnit();
+
+            var move = new MoveAction(MoveAction.Direction.EAST);
+            Assert.True(subject.CanAttemptAction(move));
+        }
+
+        [Fact]
         public void CanAct_DefaultActions_ReturnTrue()
         {
             var subject = new BUnit(1);
 
             var noop = new NoopAction();
-            var attack = new AttackAction(Guid.NewGuid());
-            var move = new MoveAction(MoveAction.Direction.EAST);
+            
             Assert.True(subject.CanAttemptAction(noop));
-            Assert.True(subject.CanAttemptAction(attack));
-            Assert.True(subject.CanAttemptAction(move));
         }
 
     }

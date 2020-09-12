@@ -3,18 +3,31 @@ using ScavengerWorld.Units.Actions;
 using ScavengerWorld.Units.Interfaces;
 using ScavengerWorld.World;
 using System;
+using System.Drawing;
 using Xunit;
 
 namespace ScavengerWorldTest.Units.Actions
 {
+    /// <summary>
+    /// Tests when and how a unit can drop things.
+    /// It should cover cases of:
+    ///     - Success:
+    ///         - IDropper interface implemented
+    ///         - Unit has the specified, existing ITransferable object
+    ///         - Object owner set to Guid.Empty
+    ///         - Object is moved to the unit's current location
+    ///     - What happens when the unit can't actually drop the item (sticky item)? It is a noop
+    /// </summary>
     public class DropActionExecutorTests : ActionExecutorTests
     {
         [Fact]
-        public void Drop_ValidObject_OwnerChanged()
+        public void Drop_ValidObject_OwnerChangedAndObjectMoved()
         {
             //Setup
             var unit = CreateUnit();
             var dropper = unit.As<IDropper>();
+            var point = new Point(5, 5);
+            unit.Setup(u => u.Location).Returns(point);
             var state = CreateStateMock(CreateUnitDictionary(unit));
 
             var subject = new ActionExecutor(state.Object);
@@ -39,6 +52,25 @@ namespace ScavengerWorldTest.Units.Actions
             //Dropper dropped and transfer object knows it has been dropped
             dropper.Verify(d => d.Drop(transferable.Object));
             transferable.Verify(t => t.Drop());
+            transferObject.Verify(t => t.Move(point));
+        }
+
+        [Fact]
+        public void Drop_NotIDropper_FailsAction()
+        {
+            //Setup
+            var unit = CreateUnit();
+            var state = CreateStateMock(CreateUnitDictionary(unit));
+
+            var transferGuid = Guid.NewGuid();
+            var action = new DropAction(transferGuid);
+            UnitActionCollection actions = new UnitActionCollection();
+            actions.AddAction(unit.Object.Id, action);
+
+            var subject = new ActionExecutor(state.Object);
+            
+            //Act & Assert
+            Assert.Throws<BadActionException>(() => subject.Execute(actions));
         }
 
         [Fact]

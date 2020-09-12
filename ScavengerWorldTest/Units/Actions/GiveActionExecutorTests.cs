@@ -10,7 +10,14 @@ namespace ScavengerWorldTest.Units.Actions
 {
     /// <summary>
     /// This is a sister-class to the DropActionExecutorTests in that they share lots of functionality
-    /// due to dropping being a common feature
+    /// due to dropping being a common feature.
+    /// Giving can only happen if: 
+    ///     - The giver is an IDropper and has the object
+    ///     - The object is ITransferable
+    ///     - The receiver is an ITaker
+    ///     - Every party exists
+    /// Success should look like ownership transferring from giver to taker 
+    /// (object being removed from giver and given to taker)
     /// </summary>
     public class GiveActionExecutorTests : ActionExecutorTests
     {

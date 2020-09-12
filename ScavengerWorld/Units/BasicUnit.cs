@@ -1,5 +1,4 @@
-﻿using ScavengerWorld.Teams;
-using ScavengerWorld.Units.Actions;
+﻿using ScavengerWorld.Units.Actions;
 using ScavengerWorld.Units.Interfaces;
 using ScavengerWorld.World;
 using ScavengerWorld.World.Foods;
@@ -9,7 +8,7 @@ using System.Linq;
 
 namespace ScavengerWorld.Units
 {
-    public abstract class BasicUnit : Unit, ITaker, IDropper
+    public abstract class BasicUnit : Unit, ITaker, IDropper, IAttacker
     {
         public double GatherRate { get; protected set; }
         public double GatherLimit { get; protected set; }
@@ -20,8 +19,7 @@ namespace ScavengerWorld.Units
         {
             get => FoodSupply.Sum(food => food.Quantity);
         }
-
-        public Team Team { get; }
+        public int AttackLevel { get; }
 
         public BasicUnit()
         {
@@ -46,7 +44,7 @@ namespace ScavengerWorld.Units
             }
 
             //Can always move
-            return action is MoveAction;
+            return action is MoveAction || action is AttackAction;
         }
 
         public virtual bool Take(ITransferable obj)
@@ -62,7 +60,7 @@ namespace ScavengerWorld.Units
             if (!CanTakeFood(food.Quantity))
                 return false;
 
-            if (FoodSupply.Contains(food))
+            if (FoodSupply.Any(f => f.Id == food.Id))
                 return false;
 
             FoodSupply.Add(food);
@@ -81,6 +79,21 @@ namespace ScavengerWorld.Units
                 return DropFood(food);
             }
             return false;
+        }
+
+
+        public virtual bool CanAttack()
+        {
+            return true;
+        }
+
+        /// <summary>
+        /// Called whenever a unit launches an attack.
+        /// Use this to record metrics or otherwise impact the unit
+        /// </summary>
+        public void Attack()
+        {
+            //TODO: record stat
         }
 
         #region Future Abilities?
@@ -136,7 +149,5 @@ namespace ScavengerWorld.Units
             }
             return copy;
         }
-
-        
     }
 }
