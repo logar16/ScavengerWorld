@@ -46,17 +46,17 @@ namespace ScavengerWorld.Units
         public virtual bool Take(ITransferable obj)
         {
             if (obj is Food food)
-            {
-                Gather(food);
-                return true;
-            }
+                return Gather(food);
 
             return false;
         }
 
-        public bool Gather(Food food)
+        private bool Gather(Food food)
         {
             if (food.Quantity + TotalFoodQuantity > GatherLimit)
+                return false;
+
+            if (FoodSupply.Contains(food))
                 return false;
 
             FoodSupply.Add(food);
@@ -67,8 +67,7 @@ namespace ScavengerWorld.Units
         {
             if (obj is Food food)
             {
-                DropFood(food);
-                return true;
+                return DropFood(food);
             }
             return false;
         }
@@ -88,9 +87,9 @@ namespace ScavengerWorld.Units
 
         #region SpecialDropFoodMethods
 
-        public Food DropFood(Food food)
+        public bool DropFood(Food food)
         {
-            return FoodSupply.Remove(food) ? food : null;
+            return FoodSupply.Remove(food);
         }
 
         //TODO: should this be changed to drop the largest of this quality?  
@@ -99,7 +98,7 @@ namespace ScavengerWorld.Units
         {
             var min = FoodSupply.Where(food => food.Quality == quality)
                                 .Aggregate((f1, f2) => f1.Quantity < f2.Quantity ? f1 : f2);
-            return DropFood(min);
+            return DropFood(min) ? min : null;
         }
 
         /// <summary>
@@ -109,7 +108,7 @@ namespace ScavengerWorld.Units
         public Food DropFood()
         {
             Food min = FoodSupply.Aggregate((f1, f2) => f1.Effectiveness < f2.Effectiveness ? f1 : f2);
-            return DropFood(min);
+            return DropFood(min) ? min : null;
         }
 
         #endregion SpecialDropFoodMethods
