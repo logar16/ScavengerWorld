@@ -4,18 +4,18 @@ namespace ScavengerWorld.World
 {
     public interface ITransferable
     {
-        Guid Owner { get; protected set; } 
+        Guid Owner { get; protected set; }
 
         bool HasOwner
         {
-            get =>  Owner != Guid.Empty;
+            get => Owner != Guid.Empty;
         }
 
         bool TransferTo(Guid owner)
         {
             if (HasOwner)
                 return false;
-            
+
             Owner = owner;
             return true;
         }
@@ -25,6 +25,6 @@ namespace ScavengerWorld.World
             Owner = Guid.Empty;
         }
 
-        
+
     }
 }

@@ -1,6 +1,5 @@
 ﻿using ScavengerWorld.Units;
 using ScavengerWorld.World.Foods;
-using Serilog;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;

@@ -1,5 +1,4 @@
 ﻿using ScavengerWorld.Sensory;
-using ScavengerWorld.Units;
 using System;
 
 namespace ScavengerWorld.World.Markers
@@ -19,7 +18,7 @@ namespace ScavengerWorld.World.Markers
             Duration = duration;
             DecayRate = decayRate;
         }
-        
+
         protected void UpdateDisplayFeatures()
         {
             var features = Display.AsCollection();

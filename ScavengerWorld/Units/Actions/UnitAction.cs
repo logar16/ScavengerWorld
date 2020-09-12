@@ -1,6 +1,4 @@
-﻿using System;
-
-namespace ScavengerWorld.Units.Actions
+﻿namespace ScavengerWorld.Units.Actions
 {
     public abstract class UnitAction
     {

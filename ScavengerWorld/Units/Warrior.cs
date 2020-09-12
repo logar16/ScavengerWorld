@@ -1,11 +1,10 @@
 ﻿using ScavengerWorld.Units.Actions;
 using ScavengerWorld.World;
 using ScavengerWorld.World.Items;
-using System;
 
 namespace ScavengerWorld.Units
 {
-    class Warrior: BasicUnit, IItemWielder
+    class Warrior : BasicUnit, IItemWielder
     {
         private Item CurrentItem;
         public bool HasItem { get => CurrentItem != null; }
@@ -23,7 +22,7 @@ namespace ScavengerWorld.Units
         {
             if (base.Take(obj))
                 return true;
-            
+
             if (obj is Item item)
                 return Wield(item);
 
@@ -34,7 +33,7 @@ namespace ScavengerWorld.Units
         {
             if (base.Drop(obj))
                 return true;
-            
+
             if (obj is Item item && item == CurrentItem)
             {
                 CurrentItem = null;

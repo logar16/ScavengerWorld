@@ -114,7 +114,7 @@ namespace ScavengerWorld.Units.Actions
             if (!(recipient is IReceiver receiver) || !IsAdjacent((Unit)donor, recipient))
             {
                 Drop(donor, action.ObjectId);   //Transfer to a non-receiver is a Drop
-                return; 
+                return;
             }
 
             var transferable = Drop(donor, action.ObjectId);

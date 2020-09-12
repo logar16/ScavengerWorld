@@ -1,7 +1,5 @@
-﻿using ScavengerWorld.Teams;
-using ScavengerWorld.Units.Actions;
+﻿using ScavengerWorld.Units.Actions;
 using Serilog;
-using System;
 using static ScavengerWorld.World.AmbientEnvironment;
 
 namespace ScavengerWorld.World
@@ -22,7 +20,7 @@ namespace ScavengerWorld.World
             ActionExecutor = new ActionExecutor(State);
         }
 
-        public WorldState Step(UnitActionCollection actionsToTake, int timeSteps=1)
+        public WorldState Step(UnitActionCollection actionsToTake, int timeSteps = 1)
         {
             StepsTaken++;
             ActionExecutor.Execute(actionsToTake);

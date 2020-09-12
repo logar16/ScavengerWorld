@@ -1,9 +1,6 @@
 ﻿using ScavengerWorld.Teams;
-using ScavengerWorld.World.Foods;
-using ScavengerWorld.World.Items;
 using System;
 using System.Collections.Generic;
-using System.Windows;
 
 namespace ScavengerWorld.World.Building
 {
@@ -28,13 +25,13 @@ namespace ScavengerWorld.World.Building
             State.Ambience = ambience;
             return this;
         }
-        
+
         public WorldBuilder WithAmbience(int stepsPerSeason, int stepsPerDay)
         {
             State.Ambience = new AmbientEnvironment(stepsPerSeason, stepsPerDay);
             return this;
         }
-        
+
         public WorldBuilder WithGeography(Geography geography)
         {
             State.Geography = geography;
@@ -68,7 +65,7 @@ namespace ScavengerWorld.World.Building
             return this;
         }
 
-        
+
 
         //public WorldBuilder WithItems(ICollection<Item> items)
         //{

@@ -18,7 +18,7 @@ namespace ScavengerWorld.World
 
         public Dictionary<Guid, Food> Food { get; internal set; }
         public Dictionary<Guid, WorldObject> InanimateObjects { get; internal set; }
-        
+
         private List<WorldObject> DestroyedObjects;
 
         public WorldState()

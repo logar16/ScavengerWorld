@@ -1,11 +1,6 @@
 ﻿using Newtonsoft.Json;
 using System;
-using System.Collections.Generic;
 using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows;
 
 namespace ScavengerWorld.World
 {
@@ -62,14 +57,14 @@ namespace ScavengerWorld.World
         {
             return Health < 0;
         }
-        
+
         /// <summary>
         /// Will be called when the object is being removed so it can clean up any references
         /// or record any data it needs before going to the graveyard.
         /// </summary>
         public virtual void Remove()
         {
-            
+
         }
 
         public abstract object Clone();

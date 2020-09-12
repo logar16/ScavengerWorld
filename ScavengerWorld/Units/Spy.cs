@@ -1,11 +1,4 @@
-﻿using ScavengerWorld.Units.Actions;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace ScavengerWorld.Units
+﻿namespace ScavengerWorld.Units
 {
     public class Spy : BasicUnit
     {

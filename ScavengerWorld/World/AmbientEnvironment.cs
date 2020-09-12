@@ -1,9 +1,5 @@
 ﻿using Serilog;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace ScavengerWorld.World
 {
@@ -47,7 +43,7 @@ namespace ScavengerWorld.World
             if (StepsIntoSeason > StepsPerSeason)
             {
                 StepsIntoSeason -= StepsPerSeason; //Catches rollover minutes
-                Season = (Seasons) ((int)Season + 1);
+                Season = (Seasons)((int)Season + 1);
                 if (Season == Seasons.WINTER)
                 {
                     Log.Warning("Winter has arrived!");

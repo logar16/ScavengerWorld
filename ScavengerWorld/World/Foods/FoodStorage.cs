@@ -1,11 +1,9 @@
 ﻿using ScavengerWorld.Sensory;
-using ScavengerWorld.Teams;
 using ScavengerWorld.Units.Interfaces;
 using System;
 using System.Collections.Generic;
 using System.Drawing;
 using System.Linq;
-using System.Windows;
 
 namespace ScavengerWorld.World.Foods
 {

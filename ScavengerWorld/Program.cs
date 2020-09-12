@@ -1,9 +1,5 @@
 ﻿using Serilog;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace ScavengerWorld
 {
@@ -21,7 +17,8 @@ namespace ScavengerWorld
             {
                 RunSimulation();
                 Log.Information("Simulation Complete, press any key to exit");
-            } catch (Exception ex)
+            }
+            catch (Exception ex)
             {
                 Log.Error(ex, "Unhandled Exception:");
             }

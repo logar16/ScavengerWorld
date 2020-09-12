@@ -1,5 +1,4 @@
 ﻿using ScavengerWorld.Sensory;
-using ScavengerWorld.Units;
 using System;
 
 namespace ScavengerWorld.World.Markers

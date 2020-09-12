@@ -12,7 +12,7 @@ namespace ScavengerWorld.Units
     {
         public double GatherRate { get; protected set; }
         public double GatherLimit { get; protected set; }
-        
+
         private List<Food> FoodSupply;
 
         public int TotalFoodQuantity

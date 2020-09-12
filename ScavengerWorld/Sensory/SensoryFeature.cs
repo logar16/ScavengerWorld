@@ -4,7 +4,7 @@ using System.ComponentModel;
 
 namespace ScavengerWorld.Sensory
 {
-    public class SensoryFeature: ICloneable
+    public class SensoryFeature : ICloneable
     {
         [JsonProperty("strength")]
         [DefaultValue(0)]

@@ -1,17 +1,12 @@
 ﻿using ScavengerWorld.Sensory;
-using ScavengerWorld.Units;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace ScavengerWorld.World.Markers
 {
     class ExponentialDecayMarker : Marker
     {
-        public ExponentialDecayMarker(SensoryDisplay display, Guid ownerId, double duration, double decayRate) : 
-            base(display, ownerId, duration, decayRate) 
+        public ExponentialDecayMarker(SensoryDisplay display, Guid ownerId, double duration, double decayRate) :
+            base(display, ownerId, duration, decayRate)
         { }
 
         public override void Step(int timeStep)

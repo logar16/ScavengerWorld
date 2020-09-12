@@ -1,8 +1,4 @@
-﻿using ScavengerWorld.Units.Actions;
-using ScavengerWorld.World;
-using System;
-
-namespace ScavengerWorld.Units
+﻿namespace ScavengerWorld.Units
 {
     /// <summary>
     /// A unit which roams about, attacking other units.

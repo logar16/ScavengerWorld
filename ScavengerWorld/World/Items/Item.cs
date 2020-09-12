@@ -1,5 +1,4 @@
-﻿using ScavengerWorld.Units;
-using System;
+﻿using System;
 
 namespace ScavengerWorld.World.Items
 {

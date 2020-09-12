@@ -9,9 +9,6 @@ using System.Drawing;
 using System.IO;
 using System.Linq;
 using System.Reflection;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows;
 
 namespace ScavengerWorld.World.Building
 {
@@ -124,7 +121,7 @@ namespace ScavengerWorld.World.Building
         {
             var name = unitConfig.Value<string>("type");
             var properties = UnitConfig.Value<JObject>(name);
-            
+
             name = "ScavengerWorld.Units." + name;
             Assembly asm = typeof(Unit).Assembly;
             Type type = asm.GetType(name);
@@ -178,7 +175,7 @@ namespace ScavengerWorld.World.Building
         private class Location
         {
             [JsonProperty("x")]
-            int X {get; set; }
+            int X { get; set; }
             [JsonProperty("y")]
             int Y { get; set; }
 

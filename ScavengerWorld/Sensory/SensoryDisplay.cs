@@ -5,7 +5,7 @@ using System.Linq;
 
 namespace ScavengerWorld.Sensory
 {
-    public class SensoryDisplay: ICloneable
+    public class SensoryDisplay : ICloneable
     {
         [JsonProperty("visual")]
         public SensoryFeature Visual { get; private set; }
@@ -28,9 +28,9 @@ namespace ScavengerWorld.Sensory
 
         }
 
-        public SensoryDisplay(SensoryFeature visual, 
-                              SensoryFeature auditory, 
-                              SensoryFeature smell, 
+        public SensoryDisplay(SensoryFeature visual,
+                              SensoryFeature auditory,
+                              SensoryFeature smell,
                               SensoryFeature taste)
         {
             Visual = visual;

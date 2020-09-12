@@ -1,11 +1,6 @@
-﻿using Serilog;
-using System;
-using System.Collections.Generic;
+﻿using System;
 using System.Drawing;
-using System.Linq;
 using System.Text;
-using System.Threading.Tasks;
-using System.Windows;
 
 namespace ScavengerWorld.World
 {
@@ -27,7 +22,7 @@ namespace ScavengerWorld.World
 
         public Geography(int width, int height) : this(width, height, 1.0) { }
 
-        public Geography(int width, int height, double ratioWalkable, int seed=-1)
+        public Geography(int width, int height, double ratioWalkable, int seed = -1)
         {
             Width = width;
             Height = height;

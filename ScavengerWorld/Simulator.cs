@@ -3,7 +3,6 @@ using ScavengerWorld.World;
 using ScavengerWorld.World.Building;
 using Serilog;
 using System.Diagnostics;
-using System.Linq;
 
 namespace ScavengerWorld
 {
@@ -40,7 +39,7 @@ namespace ScavengerWorld
             }
 
             fullWatch.Stop();
-            Log.Information("Took {steps} steps in {time} milliseconds with an average step of {average} ms", 
+            Log.Information("Took {steps} steps in {time} milliseconds with an average step of {average} ms",
                 World.StepsTaken, fullWatch.ElapsedMilliseconds, (double)fullWatch.ElapsedMilliseconds / World.StepsTaken);
         }
     }
