@@ -27,6 +27,11 @@ Giving is also how the unit can drop off food into the food storage area.  Givin
 If the unit is holding an item, the item can influence whatever action the unit takes for better or for worse.
 
 ## TODOs
+Reorganize to be
+Console App, ScavengerWorld class library, ScavengerPlayerAI class library, external client server
+
+So when launching Console App, it uses the ScavengerWorld and the default ScavengerPlayerAI libraries to run the thing.
+If using the external client server, we will still use ScavengerWorld to run the simulation but will depend on remote client for the player AI.
 
 1. Test printout to visualize
 	- Currently works but it would be nice to have more detailed visualization to improve understandability.
