@@ -1,5 +1,6 @@
 ﻿using Moq;
 using ScavengerWorld.Units;
+using ScavengerWorld.Units.Actions;
 using ScavengerWorld.World;
 using ScavengerWorld.World.Foods;
 using System;
@@ -70,7 +71,6 @@ namespace ScavengerWorldTest.Units
         {
             //Setup
             var subject = new BUnit(0);
-            var quantity = new Random().Next(1, 50);
             var item = new Mock<ITransferable>();
 
             //Act
@@ -130,6 +130,80 @@ namespace ScavengerWorldTest.Units
             //Assert
             Assert.False(canDrop);
         }
+
+        [Fact]
+        public void CanGive_FoodNotOwned_ReturnFalse()
+        {
+            //Setup
+            var subject = new BUnit();
+            var action = new GiveAction(Guid.NewGuid(), Guid.NewGuid());
+
+            //Act
+            var canAct = subject.CanAttemptAction(action);
+
+            //Assert
+            Assert.False(canAct);
+        }
+
+        [Fact]
+        public void CanGive_FoodOwned_ReturnTrue()
+        {
+            //Setup
+            var subject = new BUnit(50);
+            var quantity = new Random().Next(1, 50);
+            var food = new Food(quantity, Food.FoodQuality.FAIR);
+            var action = new GiveAction(food.Id, Guid.NewGuid());
+
+            subject.Take(food);
+
+            //Act
+            var canAct = subject.CanAttemptAction(action);
+
+            //Assert
+            Assert.True(canAct);
+        }
+
+        [Fact]
+        public void CanTake_NoSpaceForFood_ReturnFalse()
+        {
+            //Setup
+            var subject = new BUnit(0);
+            var action = new TakeAction(Guid.NewGuid());
+
+            //Act
+            var canAct = subject.CanAttemptAction(action);
+
+            //Assert
+            Assert.False(canAct);
+        }
+
+        [Fact]
+        public void CanTake_SpaceForFood_ReturnTrue()
+        {
+            //Setup
+            var subject = new BUnit(1);
+            var action = new TakeAction(Guid.NewGuid());
+
+            //Act
+            var canAct = subject.CanAttemptAction(action);
+
+            //Assert
+            Assert.True(canAct);
+        }
+
+        [Fact]
+        public void CanAct_DefaultActions_ReturnTrue()
+        {
+            var subject = new BUnit(1);
+
+            var noop = new NoopAction();
+            var attack = new AttackAction(Guid.NewGuid());
+            var move = new MoveAction(MoveAction.Direction.EAST);
+            Assert.True(subject.CanAttemptAction(noop));
+            Assert.True(subject.CanAttemptAction(attack));
+            Assert.True(subject.CanAttemptAction(move));
+        }
+
     }
 
     class BUnit : BasicUnit

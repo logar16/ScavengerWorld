@@ -33,14 +33,20 @@ namespace ScavengerWorld.Units
             if (base.CanAttemptAction(action))
                 return true;
 
-            if (action is TransferAction transfer)
+            //Have to own to give
+            if (action is GiveAction give)
             {
-                var id = transfer.ObjectId;
-                var obj = FoodSupply.FirstOrDefault(f => f.Id == id);
-                return obj != null;
+                var id = give.ObjectId;
+                var food = FoodSupply.FirstOrDefault(f => f.Id == id);
+                return food != null;
             }
-            
-            return false;
+            else if (action is TransferAction)
+            {
+                return CanTakeFood(1);  //If not too full of food already, can attempt the action at least
+            }
+
+            //Can always move
+            return action is MoveAction;
         }
 
         public virtual bool Take(ITransferable obj)
@@ -53,7 +59,7 @@ namespace ScavengerWorld.Units
 
         private bool Gather(Food food)
         {
-            if (food.Quantity + TotalFoodQuantity > GatherLimit)
+            if (!CanTakeFood(food.Quantity))
                 return false;
 
             if (FoodSupply.Contains(food))
@@ -61,6 +67,11 @@ namespace ScavengerWorld.Units
 
             FoodSupply.Add(food);
             return true;
+        }
+
+        private bool CanTakeFood(int quantity)
+        {
+            return quantity + TotalFoodQuantity <= GatherLimit;
         }
 
         public virtual bool Drop(ITransferable obj)
@@ -72,7 +83,7 @@ namespace ScavengerWorld.Units
             return false;
         }
 
-
+        #region Future Abilities?
         public void Eat()
         {
             var food = FoodSupply.Last();
@@ -83,6 +94,8 @@ namespace ScavengerWorld.Units
         {
             Health = Math.Min(Health + healthPoints, HealthMax);
         }
+
+        #endregion Future Abilities?
 
 
         #region SpecialDropFoodMethods
