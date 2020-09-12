@@ -12,7 +12,7 @@ I will probably do the learning agents in other languages for their tools.
 Units can take the following actions
 
 | Actions | Additional Input                                              |
-|---------|---------------------------------------------------------------|
+| ------- | ------------------------------------------------------------- |
 | No-op   |                                                               |
 | Move    | Cardinal Direction                                            |
 | Take    | GUID of object (item or food)                                 |
@@ -28,10 +28,9 @@ If the unit is holding an item, the item can influence whatever action the unit 
 
 ## TODOs
 
-1. Add `Takeable` interface which applies to `Food` and `Item` objects.
-	* Have an option to point to the GUID of the current holder or test if there is a holder, so we don't accidentally share an object
 1. Test printout to visualize
-	- Currently works but it would be nice to have more detailed visualization to improve understandability
+	- Currently works but it would be nice to have more detailed visualization to improve understandability.
+	- Show multiple units and items in same space (Each grid is perhaps 2x2)
 2. Write tests for
     - Individual Units
     - Food and Items (as needed)
@@ -40,15 +39,18 @@ If the unit is holding an item, the item can influence whatever action the unit 
     - WorldState
     - FullWorld
     - Simulator
+    - JsonWorldBuilder
 3. `SensoryDisplay` and how distance affects it
 	- Keep in mind how this will be communicated to agents
-1. Tune configuration for Unit attributes
-1. Configuration and creation for items (low-priority)
-1. Finish mimicing the OpenAI gym interface
-1. Test basic hand-crafted AI implementations
-1. Communication Protocol/API
+4. Tune configuration for Unit attributes
+5. Configuration and creation for items (low-priority)
+6. Finish mimicing the OpenAI gym interface
+7. Test basic hand-crafted AI implementations
+8. Communication Protocol/API
 	- Should external clients request certain units or the whole world state?
-1. Write learning code elsewhere that can decide updates
+9. Write learning code elsewhere that can decide updates
 	- Could have multiple sources that are each in charge of a particular team?
-1. Write rendering code elsewhere to make for a more fun game to watch
-1. Eventually optimize (after everything else is in place and if it turns out to be slow)
+10. Simulator to await input from "external" agent.  May be local implementation or a remote client written in another language
+11. Write rendering code elsewhere to make for a more fun game to watch/interact with
+12. Eventually optimize (after everything else is in place and if it turns out to be slow)
+13. Stepping for everything so things that need to know are stepped

@@ -29,7 +29,7 @@ namespace ScavengerWorld.Teams
         public Team(int id, List<Unit> units, FoodStorage storage) : this(id, units)
         {
             FoodStorage = storage;
-            FoodStorage.OwnerId = Id;
+            FoodStorage.TeamId = Id;
         }
 
         public Team(int id, List<Unit> units)

@@ -1,5 +1,6 @@
 ﻿using ScavengerWorld.Sensory;
 using ScavengerWorld.Teams;
+using ScavengerWorld.Units.Interfaces;
 using System;
 using System.Collections.Generic;
 using System.Drawing;
@@ -8,9 +9,9 @@ using System.Windows;
 
 namespace ScavengerWorld.World.Foods
 {
-    public class FoodStorage : WorldObject, IDiscoverable, ISteppable
+    public class FoodStorage : WorldObject, IDiscoverable, ISteppable, ITaker
     {
-        public int OwnerId { get; set; }
+        public int TeamId { get; set; }
         public int Limit { get; }
 
         private List<Food> Supply;
@@ -30,18 +31,14 @@ namespace ScavengerWorld.World.Foods
 
         public FoodStorage(FoodStorage other)
         {
-            Supply = new List<Food>(other.Supply.Count);
-            foreach (var food in other.Supply)
-            {
-                Supply.Add((Food)food.Clone());
-            }
+            Supply = other.Supply.Select(food => (Food)food.Clone()).ToList();
 
             Limit = other.Limit;
             Move(other.Location);
 
             Display = (SensoryDisplay)other.Display.Clone();
 
-            OwnerId = other.OwnerId;
+            TeamId = other.TeamId;
         }
 
         public bool Add(Food food)
@@ -91,6 +88,11 @@ namespace ScavengerWorld.World.Foods
         public override object Clone()
         {
             return new FoodStorage(this);
+        }
+
+        public bool Take(ITransferable obj)
+        {
+            throw new NotImplementedException();
         }
     }
 }
