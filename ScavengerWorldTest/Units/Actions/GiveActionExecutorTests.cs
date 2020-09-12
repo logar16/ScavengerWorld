@@ -12,7 +12,7 @@ namespace ScavengerWorldTest.Units.Actions
     /// This is a sister-class to the DropActionExecutorTests in that they share lots of functionality
     /// due to dropping being a common feature
     /// </summary>
-    public class TransferActionExecutorTests : ActionExecutorTests
+    public class GiveActionExecutorTests : ActionExecutorTests
     {
         [Fact]
         public void GiveAway_ValidObjectAndRecepient_OwnerChanged()
