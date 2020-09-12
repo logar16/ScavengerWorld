@@ -33,6 +33,8 @@ If the unit is holding an item, the item can influence whatever action the unit 
 1. Test printout to visualize
 	- Currently works but it would be nice to have more detailed visualization to improve understandability
 1. Write tests for unit actions and units themselves
+   - Write tests for all actions
+   - Document what the tests are validating for that class 
 1. `SensoryDisplay` and how distance affects it
 	- Keep in mind how this will be communicated to agents
 1. Tune configuration for Unit attributes
