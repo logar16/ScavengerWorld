@@ -12,7 +12,7 @@ using System.Reflection;
 
 namespace ScavengerWorld.World.Building
 {
-    class JsonWorldBuilder
+    public class JsonWorldBuilder
     {
         private JObject UnitConfig;
         private Random Random;

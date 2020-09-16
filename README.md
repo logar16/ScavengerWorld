@@ -26,6 +26,8 @@ Giving is also how the unit can drop off food into the food storage area.  Givin
 
 If the unit is holding an item, the item can influence whatever action the unit takes for better or for worse.
 
+Some units can create markers (like pheremones) which can be dropped and observed by others.  Units could presummably create several types of markers which can be interpreted in different ways by its teammates or enemies.  The actual communication is up to interpretation.
+
 ## TODOs
 Reorganize to be
 Console App, ScavengerWorld class library, ScavengerPlayerAI class library, external client server

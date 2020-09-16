@@ -4,23 +4,16 @@ using ScavengerWorld.World.Building;
 using Serilog;
 using System.Diagnostics;
 
-namespace ScavengerWorld
+namespace IntegrationTests
 {
     public class Simulator
     {
         private IWorld World;
 
-        public Simulator()
+        public Simulator(string file)
         {
-            //var builder = new WorldBuilder();
-            //World = builder.WithGeography(10, 6)
-            //               .WithAmbience(100, 20)
-            //               .WithTeams(2, 10)
-            //               .WithFood(2.0)
-            //               .Build();
-
             var builder = new JsonWorldBuilder();
-            World = builder.LoadWorldFile("Config/Worlds/test-world.json");
+            World = builder.LoadWorldFile(file);
         }
 
         public void Run()
