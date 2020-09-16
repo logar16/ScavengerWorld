@@ -3,7 +3,7 @@ using System;
 
 namespace ScavengerWorld.World.Markers
 {
-    abstract class Marker : WorldObject, ISteppable
+    abstract class Marker : WorldObject, ISteppable, IDiscoverable
     {
         public SensoryDisplay Display { get; private set; }
         public Guid OwnerId { get; }
