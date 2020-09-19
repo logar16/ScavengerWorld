@@ -16,6 +16,7 @@ Units can take the following actions
 | No-op   |                                                               |
 | Move    | Cardinal Direction                                            |
 | Take    | GUID of object (item or food)                                 |
+| Create  | int index of item to create and optional data defining object |
 | Drop    | GUID of object to drop                                        |
 | Give    | GUID of object to give and GUID of receiver (unit or storage) |
 | Attack  | GUID of object to attack                                      |

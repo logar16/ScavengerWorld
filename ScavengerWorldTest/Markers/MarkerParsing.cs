@@ -4,8 +4,6 @@ using ScavengerWorld.Sensory;
 using ScavengerWorld.World;
 using ScavengerWorld.World.Markers;
 using System;
-using System.Collections.Generic;
-using System.Text;
 using Xunit;
 
 namespace ScavengerWorldTest.Markers
@@ -45,6 +43,7 @@ namespace ScavengerWorldTest.Markers
             var guid = Guid.NewGuid();
 
             var display = new SensoryDisplay();
+            display.Smell.ResetTo(4, 8);
             var jsonDisplay = JObject.Parse(JsonConvert.SerializeObject(display));
 
             var data = new JObject
@@ -62,6 +61,7 @@ namespace ScavengerWorldTest.Markers
             Assert.NotNull(marker);
             Assert.Equal(guid, (marker as ITransferable).Owner);
             Assert.Equal(expectedType, marker.GetType());
+            Assert.Equal(8, marker.Display.Smell.Strength);
         }
     }
 }
