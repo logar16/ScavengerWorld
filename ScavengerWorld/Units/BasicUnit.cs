@@ -11,7 +11,6 @@ namespace ScavengerWorld.Units
 {
     public abstract class BasicUnit : Unit, ITaker, IDropper, IAttacker
     {
-        protected enum CreationIndex { MARKER }
         public double GatherRate { get; protected set; }
         public double GatherLimit { get; protected set; }
 

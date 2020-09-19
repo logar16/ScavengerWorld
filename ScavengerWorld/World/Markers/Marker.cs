@@ -3,7 +3,7 @@ using System;
 
 namespace ScavengerWorld.World.Markers
 {
-    abstract class Marker : WorldObject, ISteppable, IDiscoverable, ITransferable
+    public abstract class Marker : WorldObject, ISteppable, IDiscoverable, ITransferable
     {
         public SensoryDisplay Display { get; private set; }
         
@@ -12,12 +12,16 @@ namespace ScavengerWorld.World.Markers
 
         Guid ITransferable.Owner { get; set; }
 
-        protected Marker(SensoryDisplay display, Guid ownerId, double duration, double decayRate)
+        protected Marker(MarkerDefinition definition, Guid ownerId) : this(definition)
         {
-            Display = display;
-            Duration = duration;
-            DecayRate = decayRate;
             ((ITransferable)this).TransferTo(ownerId);
+        }
+
+        protected Marker(MarkerDefinition definition)
+        {
+            Display = definition.Display;
+            Duration = definition.Duration;
+            DecayRate = definition.DecayRate;
         }
 
         protected void UpdateDisplayFeatures()

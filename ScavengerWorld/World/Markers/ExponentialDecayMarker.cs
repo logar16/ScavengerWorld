@@ -3,11 +3,10 @@ using System;
 
 namespace ScavengerWorld.World.Markers
 {
-    class ExponentialDecayMarker : Marker
+    public class ExponentialDecayMarker : Marker
     {
-        public ExponentialDecayMarker(SensoryDisplay display, Guid ownerId, double duration, double decayRate) :
-            base(display, ownerId, duration, decayRate)
-        { }
+        public ExponentialDecayMarker(MarkerDefinition definition, Guid ownerId) : base(definition, ownerId) { }
+        public ExponentialDecayMarker(MarkerDefinition definition) : base(definition) { }
 
         public override void Step(int timeStep)
         {
