@@ -2,6 +2,7 @@
 using ScavengerWorld.Units.Interfaces;
 using ScavengerWorld.World;
 using ScavengerWorld.World.Foods;
+using ScavengerWorld.World.Markers;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -10,6 +11,7 @@ namespace ScavengerWorld.Units
 {
     public abstract class BasicUnit : Unit, ITaker, IDropper, IAttacker
     {
+        protected enum CreationIndex { MARKER }
         public double GatherRate { get; protected set; }
         public double GatherLimit { get; protected set; }
 
@@ -95,6 +97,7 @@ namespace ScavengerWorld.Units
         {
             //TODO: record stat
         }
+
 
         #region Future Abilities?
         public void Eat()

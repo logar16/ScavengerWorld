@@ -77,12 +77,27 @@ namespace ScavengerWorld.Units.Actions
                     else
                         throw new BadActionException($"Unit {unit} does not implement the ITaker interface");
                     break;
+                case CreateAction create:
+                    if (unit is ICreator creator)
+                        ExecuteCreate(creator, create);
+                    else
+                        throw new BadActionException($"Unit {unit} does not implement the ICreator interface");
+                    break;
                 case NoopAction _:
                     // TODO: we can record metrics for each type of action, otherwise this does avoid the default exception.
                     break;
                 default:
                     throw new BadActionException($"No matching action implemented for {action}");
             }
+        }
+
+        private void ExecuteCreate(ICreator creator, CreateAction create)
+        {
+            if (!creator.CanCreate(create))
+                return;
+
+            var obj = creator.Create(create);
+            State.Add(obj);
         }
 
         private void ExecuteTake(ITaker unit, TakeAction action)

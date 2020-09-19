@@ -29,16 +29,6 @@ namespace IntegrationTests
             Console.ReadLine();
         }
 
-        private static void RunAllTests()
-        {
-            throw new NotImplementedException();
-        }
-
-        private static void RunTest(string testName)
-        {
-            throw new NotImplementedException();
-        }
-
         private static void RunSimulation()
         {
             var simulator = new Simulator("Config/Worlds/test-world.json");

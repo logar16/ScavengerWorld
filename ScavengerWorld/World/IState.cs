@@ -16,6 +16,7 @@ namespace ScavengerWorld.World
         Dictionary<Guid, WorldObject> InanimateObjects { get; }
 
         WorldObject FindObject(Guid guid);
+        void Add(WorldObject obj);
         void Destroy(WorldObject obj);
         void Destroy(Guid id);
     }

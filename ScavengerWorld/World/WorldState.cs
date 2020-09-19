@@ -79,6 +79,11 @@ namespace ScavengerWorld.World
             throw new KeyNotFoundException($"No such GUID in this WorldState: {objectId}");
         }
 
+        public void Add(WorldObject obj)
+        {
+            throw new NotImplementedException();
+        }
+
         public void Destroy(WorldObject obj)
         {
             //TODO: The object is known to be destroyed, take it out immediately
