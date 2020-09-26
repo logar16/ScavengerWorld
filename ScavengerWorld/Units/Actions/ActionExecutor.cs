@@ -83,11 +83,26 @@ namespace ScavengerWorld.Units.Actions
                     else
                         throw new BadActionException($"Unit {unit} does not implement the ICreator interface");
                     break;
+                case DisplayAction display:
+                    ExecuteDisplay(unit, display);
+                    break;
                 case NoopAction _:
                     // TODO: we can record metrics for each type of action, otherwise this does avoid the default exception.
                     break;
                 default:
                     throw new BadActionException($"No matching action implemented for {action}");
+            }
+        }
+
+        private void ExecuteDisplay(Unit unit, DisplayAction action)
+        {
+            if (action.IsReset)
+            {
+                unit.ResetDisplay();
+            }
+            else
+            {
+                unit.Display.UpdateTo(action.Update);
             }
         }
 

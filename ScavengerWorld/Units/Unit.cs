@@ -16,7 +16,7 @@ namespace ScavengerWorld.Units
         public int LineOfSight { get; protected set; }
 
         [JsonProperty("sensoryDisplay")]
-        public SensoryDisplay Display { get; protected set; }
+        virtual public SensoryDisplay Display { get; protected set; }
 
         public UnitStats Stats { get; }
 
@@ -63,6 +63,11 @@ namespace ScavengerWorld.Units
             Unit copy = (Unit)MemberwiseClone();
             copy.Display = (SensoryDisplay)Display.Clone();
             return copy;
+        }
+
+        virtual public void ResetDisplay()
+        {
+            Display.Reset();
         }
 
         #endregion HelperFunctions

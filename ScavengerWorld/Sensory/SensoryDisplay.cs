@@ -60,5 +60,31 @@ namespace ScavengerWorld.Sensory
             SensoryFeature taste = (SensoryFeature)Taste.Clone();
             return new SensoryDisplay(visual, auditory, smell, taste);
         }
+
+        public void Reset()
+        {
+            foreach (var feature in AllFeatures)
+            {
+                feature.ResetTo(0, 0);
+            }
+        }
+
+        //TODO: Tests!  Specifically testing when 
+        // 1. an update has a negative vs positive value, 
+        // 2. and are all senses updated
+        virtual public void UpdateTo(SensoryDisplay display)
+        {
+            if (display.Visual.Value >= 0)
+                Visual.ResetTo(display.Visual);
+
+            if (display.Auditory.Value >= 0)
+                Auditory.ResetTo(display.Auditory);
+
+            if (display.Smell.Value >= 0)
+                Smell.ResetTo(display.Smell);
+
+            if (display.Taste.Value >= 0)
+                Taste.ResetTo(display.Taste);
+        }
     }
 }

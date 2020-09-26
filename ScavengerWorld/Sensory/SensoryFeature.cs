@@ -37,6 +37,12 @@ namespace ScavengerWorld.Sensory
             Strength = InitialStrength = strength;
         }
 
+        public void ResetTo(SensoryFeature other)
+        {
+            Value = other.Value;
+            Strength = InitialStrength = other.Strength;
+        }
+
         /// <summary>
         /// Use to calculate effect of distance on feature strength
         /// </summary>

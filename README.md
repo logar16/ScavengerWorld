@@ -11,15 +11,16 @@ I will probably do the learning agents in other languages for their tools.
 
 Units can take the following actions
 
-| Actions | Additional Input                                              |
-| ------- | ------------------------------------------------------------- |
-| No-op   |                                                               |
-| Move    | Cardinal Direction                                            |
-| Take    | GUID of object (item or food)                                 |
-| Create  | int index of item to create and optional data defining object |
-| Drop    | GUID of object to drop                                        |
-| Give    | GUID of object to give and GUID of receiver (unit or storage) |
-| Attack  | GUID of object to attack                                      |
+| Actions | Additional Input                                                    |
+| ------- | ------------------------------------------------------------------- |
+| No-op   |                                                                     |
+| Move    | Cardinal Direction                                                  |
+| Take    | GUID of object (item or food)                                       |
+| Create  | int index of item to create and optional data defining object       |
+| Drop    | GUID of object to drop                                              |
+| Give    | GUID of object to give and GUID of receiver (unit or storage)       |
+| Attack  | GUID of object to attack                                            |
+| Display | Indicate the `SensoryFeature`s that should change and their values  |
 
 A note on giving, it can be used to give to units that don't necessarily want the item 
 (I don't have a good mechanism for them deciding if they want the item in that same "turn").  This could be fun if units give bad gifts (items that do damage to the wielder or low-grade food)
