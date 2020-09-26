@@ -30,6 +30,8 @@ If the unit is holding an item, the item can influence whatever action the unit 
 
 Some units can create markers (like pheremones) which can be dropped and observed by others.  Units could presummably create several types of markers which can be interpreted in different ways by its teammates or enemies.  The actual communication is up to interpretation.
 
+In the case that a unit can create other things (let's say land mine or a bomb or something else useful), that will be done with the same `create` command, but with a different ID and with other data given for its construction.
+
 ## TODOs
 Reorganize to be
 Console App, ScavengerWorld class library, ScavengerPlayerAI class library, external client server
