@@ -7,5 +7,10 @@
     public class Monster : Unit
     {
         //TODO: Any special abilities should be defined here
+
+        internal override string DrawAs()
+        {
+            return "M";
+        }
     }
 }

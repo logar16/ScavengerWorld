@@ -40,6 +40,7 @@ namespace ScavengerWorld.World.Building
             State.Teams = ParseTeams(config);
             var objects = new Dictionary<Guid, WorldObject>();
             AppendWorldObjects(objects, State.Units);
+            AppendWorldObjects(objects, State.Teams.Select(t => t.FoodStorage));
             AppendWorldObjects(objects, ParseFood(config));
             //TODO: Parse Items
             //AppendWorldObjects(objects, ParseItems(config));
@@ -53,7 +54,10 @@ namespace ScavengerWorld.World.Building
         private static void AppendWorldObjects(Dictionary<Guid, WorldObject> objectMap, IEnumerable<WorldObject> others)
         {
             foreach (var obj in others)
-                objectMap.Add(obj.Id, obj);
+            {
+                if (obj != null)
+                    objectMap.Add(obj.Id, obj);
+            }
         }
 
         private List<WorldObject> ParseItems(JObject config)
@@ -71,10 +75,15 @@ namespace ScavengerWorld.World.Building
             var quality = Food.FoodQuality.EXCELLENT;
             Enum.TryParse(config.Value<string>("averageQuality"), out quality);
 
+            var height = State.Geography.Height;
+            var width = State.Geography.Width;
+
             var foods = new List<Food>();
             for (int i = 0; i < count; i++)
             {
                 var food = new Food(size, quality);
+                var location = new Point(Random.Next(width), Random.Next(height));
+                food.Move(location);
                 foods.Add(food);
             }
 
@@ -100,7 +109,7 @@ namespace ScavengerWorld.World.Building
                     storage = new FoodStorage(limit, location);
                 }
 
-                var home = (storage != null) ? storage.Location : new Point(-1, -1);
+                var home = storage?.Location ?? new Point(-1, -1);
 
                 var units = new List<Unit>();
                 string path = teamConfig.Value<string>("units");

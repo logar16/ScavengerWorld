@@ -80,6 +80,11 @@ namespace ScavengerWorld.World.Foods
             }
         }
 
+        internal override string DrawAs()
+        {
+            return "*";
+        }
+
         public override object Clone()
         {
             Food copy = (Food)MemberwiseClone();

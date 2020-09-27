@@ -1,5 +1,4 @@
 ﻿using ScavengerWorld.World;
-using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -46,7 +45,7 @@ namespace ScavengerWorld.Printing
             foreach (var obj in state.Objects.Values)
             {
                 var row = obj.Location.Y;
-                var col = obj.Location.X ;
+                var col = obj.Location.X;
                 var list = map[row, col];
                 if (list == null)
                 {
@@ -102,6 +101,7 @@ namespace ScavengerWorld.Printing
             return builder.ToString();
         }
 
+        //TODO: If we want to get really fancy, print based on the color of team (or neutral)
         private static string[,] BuildGrid(int size, List<WorldObject> objects)
         {
             var grid = new string[size, size];
@@ -113,8 +113,8 @@ namespace ScavengerWorld.Printing
                     if (count < objects?.Count)
                         grid[row, col] = objects[count].DrawAs();
                     else
-                        grid[row, col] = "0";
-                    
+                        grid[row, col] = " ";
+
                     count++;
                 }
             }

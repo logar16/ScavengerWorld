@@ -28,10 +28,6 @@ namespace ScavengerWorld.World
             ActionExecutor.Execute(actionsToTake);
 
             State.Step(timeSteps);
-            if (StepsTaken % 100 == 0)
-            {
-                Log.Debug(State.ToString());
-            }
             return State;
         }
 

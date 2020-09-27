@@ -1,4 +1,5 @@
-﻿using ScavengerWorld.Units.Actions;
+﻿using ScavengerWorld.Printing;
+using ScavengerWorld.Units.Actions;
 using ScavengerWorld.World;
 using ScavengerWorld.World.Building;
 using Serilog;
@@ -29,6 +30,11 @@ namespace IntegrationTests
 
                 state = World.Step(actions);
                 actions.Reset();
+
+                if (World.StepsTaken % 100 == 0)
+                {
+                    Log.Debug(StatePrinter.PrintState(state));
+                }
             }
 
             fullWatch.Stop();

@@ -7,7 +7,7 @@
   },
 
   "geography": {
-    "width": 20,
+    "width": 15,
     "height": 10,
     "ratioWalkable": 0.9,
     "seed": -1
@@ -20,7 +20,7 @@
     {
       "units": "Config/Teams/basic-team.json",
       "storage": {
-        "x": 18,
+        "x": 13,
         "y": 8,
         "limit": 1000
       }
@@ -38,7 +38,7 @@
   "food": {
     "ratio": 2,
     "averageSize": 10,
-    "averageQuality": "POOR"
+    "averageQuality": "GOOD"
   },
   
   "inatimateObjects": {

@@ -75,7 +75,7 @@ namespace ScavengerWorld.World.Foods
         public void Step(int timeStep)
         {
             //TODO: Determine what the sensory display should be
-            throw new NotImplementedException();
+            //throw new NotImplementedException();
         }
 
         public override bool ShouldRemove()
@@ -83,14 +83,19 @@ namespace ScavengerWorld.World.Foods
             return false;
         }
 
+        public bool Take(ITransferable obj)
+        {
+            throw new NotImplementedException();
+        }
+
         public override object Clone()
         {
             return new FoodStorage(this);
         }
 
-        public bool Take(ITransferable obj)
+        internal override string DrawAs()
         {
-            throw new NotImplementedException();
+            return "@";
         }
     }
 }

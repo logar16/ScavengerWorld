@@ -58,6 +58,11 @@ namespace ScavengerWorld.Units
             return $"Health: {Health}";
         }
 
+        internal override string DrawAs()
+        {
+            return "U";
+        }
+
         public override object Clone()
         {
             Unit copy = (Unit)MemberwiseClone();
