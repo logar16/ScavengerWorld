@@ -24,7 +24,7 @@ namespace ScavengerWorldTest.Printing
         {
             var state = new WorldState();
             state.Geography = new Geography(10, 10);
-            GenerateObjects(state, 800);
+            GenerateObjects(state, 80);
 
             var print = StatePrinter.PrintState(state);
 

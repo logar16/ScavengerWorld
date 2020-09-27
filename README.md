@@ -39,10 +39,11 @@ Console App, ScavengerWorld class library, ScavengerPlayerAI class library, exte
 So when launching Console App, it uses the ScavengerWorld and the default ScavengerPlayerAI libraries to run the thing.
 If using the external client server, we will still use ScavengerWorld to run the simulation but will depend on remote client for the player AI.
 
-1. Test printout to visualize
-	- Currently works but it would be nice to have more detailed visualization to improve understandability.
-	- Show multiple units and items in same space (Each grid is perhaps 2x2)
-2. Write tests for
+1. Test with basic hand-crafted AI implementations
+2. Test printout to visualize
+	- Would be nice to have colored units based on team (low priority).
+3. Write unit tests for
+    - JsonWorldBuilder
     - Individual Units
     - Food and Items (as needed)
     - Geography
@@ -50,18 +51,16 @@ If using the external client server, we will still use ScavengerWorld to run the
     - WorldState
     - FullWorld
     - Simulator
-    - JsonWorldBuilder
-3. `SensoryDisplay` and how distance affects it
+4. `SensoryDisplay` and how distance affects it
 	- Keep in mind how this will be communicated to agents
-4. Tune configuration for Unit attributes
-5. Configuration and creation for items (low-priority)
-6. Finish mimicing the OpenAI gym interface
-7. Test basic hand-crafted AI implementations
+5. Tune configuration for Unit attributes
+6. Configuration and creation for items (low-priority)
+7.  Finish mimicing the OpenAI gym interface (low-priority)
 8. Communication Protocol/API
 	- Should external clients request certain units or the whole world state?
 9. Write learning code elsewhere that can decide updates
 	- Could have multiple sources that are each in charge of a particular team?
-10. Simulator to await input from "external" agent.  May be local implementation or a remote client written in another language
+10. Simulator to await input from "external" agent.  May be a local implementation or a remote client written in another language
 11. Write rendering code elsewhere to make for a more fun game to watch/interact with
+    - Probably do it in React or Angular to take advantage of great UI tools
 12. Eventually optimize (after everything else is in place and if it turns out to be slow)
-13. Stepping for everything so things that need to know are stepped
