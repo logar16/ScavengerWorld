@@ -102,7 +102,7 @@ namespace ScavengerWorld.Units.Actions
             }
             else
             {
-                unit.Display.UpdateTo(action.Update);
+                unit.Display.UpdateFrom(action.Update);
             }
         }
 

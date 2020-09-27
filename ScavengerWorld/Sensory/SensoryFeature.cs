@@ -6,6 +6,13 @@ namespace ScavengerWorld.Sensory
 {
     public class SensoryFeature : ICloneable
     {
+        public static readonly int NO_VALUE = -1;
+        public static readonly int IGNORE_UPDATE = -2;
+
+        /// <summary>
+        /// Note that Strength is a ratio, with 1 being full strength 
+        /// and 0 being none at all (totally ineffective)
+        /// </summary>
         [JsonProperty("strength")]
         [DefaultValue(0)]
         public double Strength { get; private set; }
@@ -25,6 +32,12 @@ namespace ScavengerWorld.Sensory
             Strength = InitialStrength = strength;
         }
 
+        public SensoryFeature()
+        {
+            Value = NO_VALUE;
+            Strength = 0.0;
+        }
+
         public double AdjustStrength(double ratio)
         {
             Strength = InitialStrength * ratio;
@@ -37,25 +50,33 @@ namespace ScavengerWorld.Sensory
             Strength = InitialStrength = strength;
         }
 
-        public void ResetTo(SensoryFeature other)
+        public void UpdateFrom(SensoryFeature other)
         {
+            if (other.Value <= IGNORE_UPDATE)
+                return;
+
             Value = other.Value;
             Strength = InitialStrength = other.Strength;
         }
 
-        /// <summary>
-        /// Use to calculate effect of distance on feature strength
-        /// </summary>
-        /// <param name="distance"></param>
-        /// <returns>Estimated strength from that distance</returns>
-        public double EffectiveStrength(double distance)
+        public void Reset()
         {
-            return Strength * (Math.Pow(0.9, distance) - .2);   //Exponential decay up to ~15 spaces away
+            ResetTo(NO_VALUE, 0);
         }
 
         public object Clone()
         {
             return MemberwiseClone();
+        }
+
+        public override bool Equals(object obj)
+        {
+            if (obj is SensoryFeature other)
+            {
+                return other.Value == Value && other.Strength == Strength;
+            }
+
+            return false;
         }
     }
 }

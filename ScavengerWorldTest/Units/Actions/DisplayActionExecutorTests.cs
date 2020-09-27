@@ -18,7 +18,7 @@ namespace ScavengerWorldTest.Units.Actions
             var unit = CreateUnit();
             SensoryDisplay display = new SensoryDisplay();
             display.Taste.ResetTo(1, 5);
-            unit.Setup(u => u.Display.UpdateTo(display));
+            unit.Setup(u => u.Display.UpdateFrom(display));
             var action = new DisplayAction(display);
             UnitActionCollection actions = new UnitActionCollection();
             actions.AddAction(unit.Object.Id, action);
@@ -31,7 +31,7 @@ namespace ScavengerWorldTest.Units.Actions
             subject.Execute(actions);
 
             //Assert
-            unit.Verify(unit => unit.Display.UpdateTo(display));
+            unit.Verify(unit => unit.Display.UpdateFrom(display));
         }
 
         [Fact]
