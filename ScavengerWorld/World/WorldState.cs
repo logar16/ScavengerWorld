@@ -70,25 +70,6 @@ namespace ScavengerWorld.World
 
         public void Destroy(WorldObject obj)
         {
-            var objectId = obj.Id;
-
-            if (obj is Unit unit)
-            {
-                //TODO: Remove from Teams/AllUnits
-            }
-            else if (obj is Food food)
-            {
-                //TODO: Remove from Food list
-            }
-            else if (obj is WorldObject wobject)
-            {
-                //TODO: Remove from InanimateObjects
-            }
-            else if (obj is FoodStorage storage)
-            {
-                //TODO: Remove from Team
-            }
-
             //TODO: Make sure owner releases the object
             if (obj is ITransferable transferable && transferable.HasOwner)
             {
@@ -96,6 +77,7 @@ namespace ScavengerWorld.World
                 owner.Drop(transferable);
             }
 
+            Objects.Remove(obj.Id);
             DestroyedObjects.Add(obj);
         }
 
