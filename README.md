@@ -32,6 +32,17 @@ Some units can create markers (like pheremones) which can be dropped and observe
 
 In the case that a unit can create other things (let's say land mine or a bomb or something else useful), that will be done with the same `create` command, but with a different ID and with other data given for its construction.
 
+## Ideas
+
+### Sensory Displays
+For the agent making decisions based on the data, consider breaking the different sensory data into a 3D map--grid of surrounding area for 2D and the other dimension is the sensory input.  This should allow the agent to learn patterns based on how it sees or how it hears, etc. without having to treat them as the exact same type of stimulus.
+
+Note: Stimulus will initially just indicate the exact location of the emitter (if display had sufficient strength the reach the unit).  Maybe someday will treat smell and sight differently as they work very differently in reality. 
+
+### Simulation vs. Decision-making vs. Rendering
+I have found that C# is great for full on simulations, because its type-safety helps me avoid nasty little errors that would kill me in Python/JavaScript.  However, the UI tools aren't great, so I think I will write some rendering code in JavaScript which will take in the `WorldState` as a JSON and render it all pretty-like.  Finally, I am much more familiar with the ML tools in Python, so I will probably stick to those, although this may be an opportunity to look into ML tools for C# or F#.
+
+
 ## TODOs
 Reorganize to be
 Console App, ScavengerWorld class library, ScavengerPlayerAI class library, external client server
@@ -39,10 +50,10 @@ Console App, ScavengerWorld class library, ScavengerPlayerAI class library, exte
 So when launching Console App, it uses the ScavengerWorld and the default ScavengerPlayerAI libraries to run the thing.
 If using the external client server, we will still use ScavengerWorld to run the simulation but will depend on remote client for the player AI.
 
-1. Test with basic hand-crafted AI implementations
+1. Integ Test with basic, hand-crafted AI implementations
 2. Test printout to visualize
 	- Would be nice to have colored units based on team (low priority).
-3. Write unit tests for
+3. Write retroactive unit tests for
     - JsonWorldBuilder
     - Individual Units
     - Food and Items (as needed)
@@ -50,7 +61,6 @@ If using the external client server, we will still use ScavengerWorld to run the
     - Ambiance
     - WorldState
     - FullWorld
-    - Simulator
 4. `SensoryDisplay` and how distance affects it
 	- Keep in mind how this will be communicated to agents
 5. Tune configuration for Unit attributes
