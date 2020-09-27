@@ -24,7 +24,7 @@ namespace IntegrationTests
 
             while (!World.IsDone())
             {
-                var units = state.AllUnits.Values;
+                var units = state.Units;
                 actions.SetDefaultActions(units);
 
                 state = World.Step(actions);

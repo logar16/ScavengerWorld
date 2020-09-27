@@ -14,7 +14,8 @@ namespace ScavengerWorldTest.Units.Actions
             //Setup
             var unit = CreateUnit();
 
-            var state = CreateStateMock(CreateUnitDictionary(unit));
+            var state = CreateStateMock(CreateUnitList(unit));
+            AddUnitToState(unit, state);
 
             var action = new CreateAction(0);
             UnitActionCollection actions = new UnitActionCollection();
@@ -40,7 +41,8 @@ namespace ScavengerWorldTest.Units.Actions
             var obj = new Mock<WorldObject>().Object;
             creator.Setup(c => c.CanCreate(action)).Returns(false);
 
-            var state = CreateStateMock(CreateUnitDictionary(unit));
+            var state = CreateStateMock(CreateUnitList(unit));
+            AddUnitToState(unit, state);
 
             var subject = new ActionExecutor(state.Object);
 
@@ -68,7 +70,8 @@ namespace ScavengerWorldTest.Units.Actions
             creator.Setup(c => c.CanCreate(action)).Returns(true);
             creator.Setup(c => c.Create(action)).Returns(obj);
 
-            var state = CreateStateMock(CreateUnitDictionary(unit));
+            var state = CreateStateMock(CreateUnitList(unit));
+            AddUnitToState(unit, state);
 
             var subject = new ActionExecutor(state.Object);
 

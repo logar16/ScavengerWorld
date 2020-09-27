@@ -26,8 +26,9 @@ namespace ScavengerWorldTest.Units.Actions
             unit.Setup(u => u.Location).Returns(new Point(5, 5));
             var newLocation = new Point(x, y);
             
-            var state = CreateStateMock(CreateUnitDictionary(unit));
+            var state = CreateStateMock(CreateUnitList(unit));
             state.Setup(s => s.Geography.GetTerrainAt(newLocation)).Returns(Geography.Terrain.NORMAL);
+            AddUnitToState(unit, state);
 
 
             var action = new MoveAction(direction);
@@ -57,8 +58,9 @@ namespace ScavengerWorldTest.Units.Actions
             unit.Setup(u => u.Location).Returns(new Point(5, 5));
             var newLocation = new Point(x, y);
 
-            var state = CreateStateMock(CreateUnitDictionary(unit));
+            var state = CreateStateMock(CreateUnitList(unit));
             state.Setup(s => s.Geography.GetTerrainAt(newLocation)).Returns(Geography.Terrain.ROUGH);
+            AddUnitToState(unit, state);
 
 
             var action = new MoveAction(direction);

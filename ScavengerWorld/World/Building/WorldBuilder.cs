@@ -4,6 +4,9 @@ using System.Collections.Generic;
 
 namespace ScavengerWorld.World.Building
 {
+    /// <summary>
+    /// A class for building up the world state using code only.  Needs some work.
+    /// </summary>
     public class WorldBuilder
     {
         private WorldState State;
@@ -44,11 +47,11 @@ namespace ScavengerWorld.World.Building
             return this;
         }
 
-        public WorldBuilder WithTeams(ICollection<Team> teams)
-        {
-            State.Teams.AddRange(teams);
-            return this;
-        }
+        //public WorldBuilder WithTeams(ICollection<Team> teams)
+        //{
+        //    State.Teams.AddRange(teams);
+        //    return this;
+        //}
         //public WorldBuilder WithTeams(int numTeams, int teamSize)
         //{
         //    for (int i = 0; i < numTeams; i++)
@@ -59,11 +62,11 @@ namespace ScavengerWorld.World.Building
         //    return this;
         //}
 
-        public WorldBuilder WithTeam(Team team)
-        {
-            State.Teams.Add(team);
-            return this;
-        }
+        //public WorldBuilder WithTeam(Team team)
+        //{
+        //    State.Teams.Add(team);
+        //    return this;
+        //}
 
 
 

@@ -29,7 +29,9 @@ namespace ScavengerWorldTest.Units.Actions
             var dropper = first.As<IDropper>();
             var second = CreateUnit();
             var receiver = second.As<IReceiver>();
-            var state = CreateStateMock(CreateUnitDictionary(first, second));
+            var state = CreateStateMock(CreateUnitList(first, second));
+            AddUnitToState(first, state);
+            AddUnitToState(second, state);
             var subject = new ActionExecutor(state.Object);
 
             var transferObject = new Mock<WorldObject>();
@@ -41,7 +43,6 @@ namespace ScavengerWorldTest.Units.Actions
             dropper.Setup(d => d.Drop(transferable.Object)).Returns(true);
             receiver.Setup(t => t.Receive(transferable.Object)).Returns(true);
 
-            state.Setup(s => s.FindObject(second.Object.Id)).Returns(second.Object);
             state.Setup(s => s.FindObject(transferGuid)).Returns(transferObject.Object);
 
             UnitActionCollection actions = new UnitActionCollection();
@@ -65,7 +66,9 @@ namespace ScavengerWorldTest.Units.Actions
             var first = CreateUnit();
             var dropper = first.As<IDropper>();
             var second = CreateUnit();
-            var state = CreateStateMock(CreateUnitDictionary(first, second));
+            var state = CreateStateMock(CreateUnitList(first, second));
+            AddUnitToState(first, state);
+            AddUnitToState(second, state);
             var subject = new ActionExecutor(state.Object);
 
             var transferObject = new Mock<WorldObject>();
@@ -76,10 +79,7 @@ namespace ScavengerWorldTest.Units.Actions
 
             dropper.Setup(d => d.Drop(transferable.Object)).Returns(true);
 
-            state.Setup(s => s.FindObject(second.Object.Id)).Returns(second.Object);
             state.Setup(s => s.FindObject(transferGuid)).Returns(transferObject.Object);
-
-
 
             UnitActionCollection actions = new UnitActionCollection();
             actions.AddAction(first.Object.Id, action);
@@ -103,7 +103,9 @@ namespace ScavengerWorldTest.Units.Actions
             var second = CreateUnit();
             second.Setup(s => s.Location).Returns(new Point(10, 10));
             var receiver = second.As<IReceiver>();
-            var state = CreateStateMock(CreateUnitDictionary(first, second));
+            var state = CreateStateMock(CreateUnitList(first, second));
+            AddUnitToState(first, state);
+            AddUnitToState(second, state);
             var subject = new ActionExecutor(state.Object);
 
             var transferObject = new Mock<WorldObject>();
@@ -113,8 +115,6 @@ namespace ScavengerWorldTest.Units.Actions
             var action = new GiveAction(transferGuid, second.Object.Id);
 
             dropper.Setup(d => d.Drop(transferable.Object)).Returns(true);
-
-            state.Setup(s => s.FindObject(second.Object.Id)).Returns(second.Object);
             state.Setup(s => s.FindObject(transferGuid)).Returns(transferObject.Object);
 
             UnitActionCollection actions = new UnitActionCollection();
@@ -139,14 +139,13 @@ namespace ScavengerWorldTest.Units.Actions
             var first = CreateUnit();
             var dropper = first.As<IDropper>();
             var second = CreateUnit();
-            var state = CreateStateMock(CreateUnitDictionary(first, second));
+            var state = CreateStateMock(CreateUnitList(first, second));
+            AddUnitToState(first, state);
+            AddUnitToState(second, state);
             var transferGuid = Guid.NewGuid();
             var action = new GiveAction(transferGuid, second.Object.Id);
 
             var subject = new ActionExecutor(state.Object);
-
-
-            state.Setup(s => s.FindObject(second.Object.Id)).Returns(second.Object);
 
             UnitActionCollection actions = new UnitActionCollection();
             actions.AddAction(first.Object.Id, action);

@@ -10,10 +10,9 @@ namespace ScavengerWorld.World
     {
         AmbientEnvironment Ambience { get; }
         Geography Geography { get; }
-        List<Team> Teams { get; }
-        Dictionary<Guid, Unit> AllUnits { get; }
-        Dictionary<Guid, Food> Food { get; }
-        Dictionary<Guid, WorldObject> InanimateObjects { get; }
+        IEnumerable<Team> Teams { get; }
+        IEnumerable<Unit> Units { get; }
+        Dictionary<Guid, WorldObject> Objects { get; }
 
         WorldObject FindObject(Guid guid);
         void Add(WorldObject obj);

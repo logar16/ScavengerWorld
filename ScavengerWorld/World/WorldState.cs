@@ -13,20 +13,18 @@ namespace ScavengerWorld.World
     {
         public AmbientEnvironment Ambience { get; internal set; }
         public Geography Geography { get; internal set; }
-        public List<Team> Teams { get; internal set; }
-        public Dictionary<Guid, Unit> AllUnits { get; internal set; }
-        public int TotalUnits { get { return Teams.Sum(t => t.UnitCount); } }
+        public IEnumerable<Team> Teams { get; internal set; }
+        public IEnumerable<Unit> Units { get => Teams.SelectMany(t => t.Units); }
+        public int TotalUnits { get => Teams.Sum(t => t.UnitCount); } 
 
-        public Dictionary<Guid, Food> Food { get; internal set; }
-        public Dictionary<Guid, WorldObject> InanimateObjects { get; internal set; }
+        public Dictionary<Guid, WorldObject> Objects { get; internal set; }
 
         private List<WorldObject> DestroyedObjects;
 
         public WorldState()
         {
             Teams = new List<Team>();
-            Food = new Dictionary<Guid, Food>();
-            InanimateObjects = new Dictionary<Guid, WorldObject>();
+            Objects = new Dictionary<Guid, WorldObject>();
 
             DestroyedObjects = new List<WorldObject>();
         }
@@ -38,10 +36,7 @@ namespace ScavengerWorld.World
             copy.Geography = (Geography)Geography.Clone();
 
             copy.Teams = Teams.Select(team => new Team(team)).ToList();
-            copy.AllUnits = copy.Teams.SelectMany(t => t.Units)
-                                      .ToDictionary(unit => unit.Id, unit => unit);
-            copy.Food = Food.ToDictionary(entry => entry.Key, entry => (Food)entry.Value.Clone());
-            copy.InanimateObjects = InanimateObjects.ToDictionary(entry => entry.Key, entry => (WorldObject)entry.Value.Clone());
+            copy.Objects = Objects.ToDictionary(entry => entry.Key, entry => (WorldObject)entry.Value.Clone());
 
             return copy;
         }
@@ -51,60 +46,21 @@ namespace ScavengerWorld.World
         {
             Ambience.Step(timeStep);
 
-            foreach (var unit in AllUnits.Values)
-            {
-                unit.Step(timeStep);
-                CheckShouldDestroy(unit);
-            }
-
-            foreach (var food in Food.Values)
-            {
-                food.Step(timeStep);
-                CheckShouldDestroy(food);
-            }
-
-            foreach (var obj in InanimateObjects.Values)
+            foreach (var obj in Objects.Values)
             {
                 if (obj is ISteppable stepper)
                     stepper.Step(timeStep);
-                
-                CheckShouldDestroy(obj);
+
+                if (obj.ShouldRemove())
+                    Destroy(obj);
             }
         }
 
-        private void CheckShouldDestroy(WorldObject obj)
-        {
-            if (obj.ShouldRemove())
-                Destroy(obj);
-        }
-
-        public Unit GetUnit(Guid unitGuid)
-        {
-            AllUnits.TryGetValue(unitGuid, out Unit unit);
-            return unit;
-        }
 
         public WorldObject FindObject(Guid objectId)
         {
-            if (AllUnits.TryGetValue(objectId, out Unit unit))
-            {
-                return unit;
-            }
-            if (Food.TryGetValue(objectId, out Food food))
-            {
-                return food;
-            }
-            if (InanimateObjects.TryGetValue(objectId, out WorldObject obj))
-            {
-                return obj;
-            }
-
-            var storage = Teams.FirstOrDefault(t => t.FoodStorage.Id == objectId)?.FoodStorage;
-            if (storage != null)
-                return storage;
-
-            //TODO: What if the object was recently destroyed?
-            throw new KeyNotFoundException($"No such GUID in this WorldState: {objectId}");
+            Objects.TryGetValue(objectId, out WorldObject obj);
+            return obj;
         }
 
         public void Add(WorldObject obj)

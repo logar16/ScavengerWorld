@@ -11,16 +11,16 @@ namespace ScavengerWorldTest.Units.Actions
 {
     public class ActionExecutorTests
     {
-        protected Mock<IState> CreateStateMock(Dictionary<Guid, Unit> units)
+        protected Mock<IState> CreateStateMock(IEnumerable<Unit> units)
         {
             var state = new Mock<IState>();
-            state.Setup(s => s.AllUnits).Returns(units);
+            state.Setup(s => s.Units).Returns(units);
             return state;
         }
 
-        protected Dictionary<Guid, Unit> CreateUnitDictionary(params Mock<Unit>[] units)
+        protected IEnumerable<Unit> CreateUnitList(params Mock<Unit>[] units)
         {
-            return units.ToDictionary(unit => unit.Object.Id, unit => unit.Object);
+            return units.Select(unit => unit.Object);
         }
 
         protected Mock<Unit> CreateUnit()
@@ -30,11 +30,10 @@ namespace ScavengerWorldTest.Units.Actions
             unit.Setup(u => u.CanAttemptAction(It.IsAny<UnitAction>())).Returns(true);
             return unit;
         }
-
-        //TODO: Tests for the following cases:
-        // Attack with valid/invalid target
-        // Drop with valid/invalid object
-        // Give with valid/invalid object and valid/invalid recipient
-        // Take with valid/invalid target object (what happens if someone grabs it first?)
+        
+        protected void AddUnitToState(Mock<Unit> unit, Mock<IState> state)
+        {
+            state.Setup(s => s.FindObject(unit.Object.Id)).Returns(unit.Object);
+        }
     }
 }

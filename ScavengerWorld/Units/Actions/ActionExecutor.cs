@@ -18,30 +18,31 @@ namespace ScavengerWorld.Units.Actions
 
         public void Execute(UnitActionCollection actionCollection)
         {
-            var allUnits = State.AllUnits;
             foreach (var entry in actionCollection.Actions)
             {
                 var guid = entry.Key;
                 var action = entry.Value;
 
-                if (allUnits.TryGetValue(guid, out Unit unit))
+                var unit = State.FindObject(guid) as Unit;
+
+                if (unit == null)
+                    return;
+                
+                //If the Unit is technically dead, we will skip it and it should be cleaned up for next round
+                if (unit.ShouldRemove())
+                    continue;
+
+                if (!unit.CanAttemptAction(action))
+                    action = new NoopAction();  //Defaults to no-op
+
+                try
                 {
-                    //If the Unit is technically dead, we will skip it and it should be cleaned up for next round
-                    if (unit.ShouldRemove())
-                        continue;
-
-                    if (!unit.CanAttemptAction(action))
-                        action = new NoopAction();  //Defaults to no-op
-
-                    try
-                    {
-                        AttemptAction(unit, action);
-                    }
-                    catch (BadActionException ex)
-                    {
-                        Log.Error("Failed to execute action due to the following error: ", ex);
-                        throw;      //TODO: Do we really want to throw errors here?
-                    }
+                    AttemptAction(unit, action);
+                }
+                catch (BadActionException ex)
+                {
+                    Log.Error("Failed to execute action due to the following error: ", ex);
+                    throw;      //TODO: Do we really want to throw errors here?
                 }
             }
         }

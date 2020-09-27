@@ -28,7 +28,8 @@ namespace ScavengerWorldTest.Units.Actions
             var dropper = unit.As<IDropper>();
             var point = new Point(5, 5);
             unit.Setup(u => u.Location).Returns(point);
-            var state = CreateStateMock(CreateUnitDictionary(unit));
+            var state = CreateStateMock(CreateUnitList(unit));
+            AddUnitToState(unit, state);
 
             var subject = new ActionExecutor(state.Object);
 
@@ -60,7 +61,8 @@ namespace ScavengerWorldTest.Units.Actions
         {
             //Setup
             var unit = CreateUnit();
-            var state = CreateStateMock(CreateUnitDictionary(unit));
+            var state = CreateStateMock(CreateUnitList(unit));
+            AddUnitToState(unit, state);
 
             var transferGuid = Guid.NewGuid();
             var action = new DropAction(transferGuid);
@@ -79,7 +81,8 @@ namespace ScavengerWorldTest.Units.Actions
             //Setup
             var unit = CreateUnit();
             var dropper = unit.As<IDropper>();
-            var state = CreateStateMock(CreateUnitDictionary(unit));
+            var state = CreateStateMock(CreateUnitList(unit));
+            AddUnitToState(unit, state);
 
             var transferObject = new Mock<WorldObject>();
             //Object not given the ITransferable interface so it will fail
@@ -102,7 +105,8 @@ namespace ScavengerWorldTest.Units.Actions
             //Setup
             var unit = CreateUnit();
             var dropper = unit.As<IDropper>();
-            var state = CreateStateMock(CreateUnitDictionary(unit));
+            var state = CreateStateMock(CreateUnitList(unit));
+            AddUnitToState(unit, state);
 
             var subject = new ActionExecutor(state.Object);
 
@@ -136,7 +140,8 @@ namespace ScavengerWorldTest.Units.Actions
             //Setup
             var unit = CreateUnit();
             var dropper = unit.As<IDropper>();
-            var state = CreateStateMock(CreateUnitDictionary(unit));
+            var state = CreateStateMock(CreateUnitList(unit));
+            AddUnitToState(unit, state);
 
             var subject = new ActionExecutor(state.Object);
 
@@ -163,7 +168,8 @@ namespace ScavengerWorldTest.Units.Actions
             //Setup
             var unit = CreateUnit();
             var dropper = unit.As<IDropper>();
-            var state = CreateStateMock(CreateUnitDictionary(unit));
+            var state = CreateStateMock(CreateUnitList(unit));
+            AddUnitToState(unit, state);
 
             var subject = new ActionExecutor(state.Object);
 

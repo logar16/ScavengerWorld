@@ -27,8 +27,9 @@ namespace ScavengerWorldTest.Units.Actions
             var transfer = target.As<ITransferable>();
             var targetId = Guid.NewGuid();
 
-            var state = CreateStateMock(CreateUnitDictionary(unit));
+            var state = CreateStateMock(CreateUnitList(unit));
             state.Setup(s => s.FindObject(targetId)).Returns(target.Object);
+            AddUnitToState(unit, state);
 
             var action = new TakeAction(targetId);
             UnitActionCollection actions = new UnitActionCollection();
@@ -53,8 +54,9 @@ namespace ScavengerWorldTest.Units.Actions
             var target = new Mock<WorldObject>();
             var targetId = Guid.NewGuid();
 
-            var state = CreateStateMock(CreateUnitDictionary(unit));
+            var state = CreateStateMock(CreateUnitList(unit));
             state.Setup(s => s.FindObject(targetId)).Returns(target.Object);
+            AddUnitToState(unit, state);
 
             var action = new TakeAction(targetId);
             UnitActionCollection actions = new UnitActionCollection();
@@ -74,7 +76,8 @@ namespace ScavengerWorldTest.Units.Actions
             var taker = unit.As<ITaker>();
             var targetId = Guid.NewGuid();
 
-            var state = CreateStateMock(CreateUnitDictionary(unit));
+            var state = CreateStateMock(CreateUnitList(unit));
+            AddUnitToState(unit, state);
 
             var action = new TakeAction(targetId);
             UnitActionCollection actions = new UnitActionCollection();
@@ -97,8 +100,9 @@ namespace ScavengerWorldTest.Units.Actions
             var targetId = Guid.NewGuid();
             target.Setup(t => t.Location).Returns(new System.Drawing.Point(10, 10));
 
-            var state = CreateStateMock(CreateUnitDictionary(unit));
+            var state = CreateStateMock(CreateUnitList(unit));
             state.Setup(s => s.FindObject(targetId)).Returns(target.Object);
+            AddUnitToState(unit, state);
 
             var action = new TakeAction(targetId);
             UnitActionCollection actions = new UnitActionCollection();
@@ -122,8 +126,9 @@ namespace ScavengerWorldTest.Units.Actions
 
             transfer.Setup(t => t.HasOwner).Returns(true);
 
-            var state = CreateStateMock(CreateUnitDictionary(unit));
+            var state = CreateStateMock(CreateUnitList(unit));
             state.Setup(s => s.FindObject(targetId)).Returns(target.Object);
+            AddUnitToState(unit, state);
 
             var action = new TakeAction(targetId);
             UnitActionCollection actions = new UnitActionCollection();
