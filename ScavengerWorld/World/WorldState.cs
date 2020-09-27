@@ -49,6 +49,22 @@ namespace ScavengerWorld.World
         public void Step(int timeStep)
         {
             Ambience.Step(timeStep);
+
+            foreach (var unit in AllUnits.Values)
+            {
+                unit.Step(timeStep);
+            }
+
+            foreach (var food in Food.Values)
+            {
+                food.Step(timeStep);
+            }
+
+            foreach (var obj in InanimateObjects.Values)
+            {
+                if (obj is ISteppable stepper)
+                    stepper.Step(timeStep);
+            }
         }
 
         public Unit GetUnit(Guid unitGuid)

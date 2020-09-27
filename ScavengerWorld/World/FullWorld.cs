@@ -6,6 +6,8 @@ namespace ScavengerWorld.World
 {
     public class FullWorld : IWorld
     {
+        private const int MAX_STEPS = 1_000_000;
+
         private WorldState State;
         private readonly WorldState Initial;
 
@@ -43,12 +45,20 @@ namespace ScavengerWorld.World
 
         public bool IsDone()
         {
-            if (StepsTaken >= 1000000)
+            if (StepsTaken >= MAX_STEPS)
+            {
+                Log.Warning($"World is 'done' because it reached maximum number of steps {MAX_STEPS}");
                 return true;
+            }
             else if (State.Ambience.Season.Equals(Seasons.WINTER))
+            {
+                Log.Information("World is 'done' because winter has arrived!");
                 return true;
+            }
             else
+            {
                 return false;
+            }
         }
     }
 }
