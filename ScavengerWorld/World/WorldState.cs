@@ -104,64 +104,9 @@ namespace ScavengerWorld.World
             Destroy(FindObject(id));
         }
 
-        #region Printing
-
         public override string ToString()
         {
-            var builder = new StringBuilder();
-            builder.AppendLine("World: {");
-
-            builder.AppendLine($"Geography: {Geography}");
-
-            builder.AppendLine($"Ambience: {Ambience}");
-
-            builder.AppendLine();
-
-            builder.AppendLine(DrawUnitMap());
-
-            builder.AppendLine("Teams: [");
-            foreach (var team in Teams)
-            {
-                builder.Append(team.ToString());
-            }
-            builder.AppendLine("]");
-
-            builder.AppendLine("}");
-            return builder.ToString();
+            return $"[WorldState] {{ Objects: {Objects.Count}, Ambiance: {Ambience} }}";
         }
-
-        private string DrawUnitMap()
-        {
-            var builder = new StringBuilder();
-            builder.AppendLine("Unit Map:");
-
-            int width = Geography.Width;
-            int height = Geography.Height;
-
-            var map = new int[height, width];
-
-            foreach (var team in Teams)
-            {
-                var locations = team.Units.Select(u => u.Location);
-                foreach (var location in locations)
-                {
-                    map[(int)location.Y, (int)location.X] += 1;
-                }
-            }
-
-            for (int row = 0; row < height; row++)
-            {
-                for (int col = 0; col < width; col++)
-                {
-                    if (col == 0)
-                        builder.Append("|");
-                    builder.Append($"{map[row, col]}|");
-                }
-                builder.AppendLine();
-            }
-            return builder.ToString();
-        }
-
-        #endregion Printing
     }
 }
