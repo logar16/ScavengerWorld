@@ -1,5 +1,6 @@
 ﻿using ScavengerWorld.Teams;
 using ScavengerWorld.Units;
+using ScavengerWorld.Units.Interfaces;
 using ScavengerWorld.World.Foods;
 using System;
 using System.Collections.Generic;
@@ -53,18 +54,28 @@ namespace ScavengerWorld.World
             foreach (var unit in AllUnits.Values)
             {
                 unit.Step(timeStep);
+                CheckShouldDestroy(unit);
             }
 
             foreach (var food in Food.Values)
             {
                 food.Step(timeStep);
+                CheckShouldDestroy(food);
             }
 
             foreach (var obj in InanimateObjects.Values)
             {
                 if (obj is ISteppable stepper)
                     stepper.Step(timeStep);
+                
+                CheckShouldDestroy(obj);
             }
+        }
+
+        private void CheckShouldDestroy(WorldObject obj)
+        {
+            if (obj.ShouldRemove())
+                Destroy(obj);
         }
 
         public Unit GetUnit(Guid unitGuid)
@@ -92,6 +103,7 @@ namespace ScavengerWorld.World
             if (storage != null)
                 return storage;
 
+            //TODO: What if the object was recently destroyed?
             throw new KeyNotFoundException($"No such GUID in this WorldState: {objectId}");
         }
 
@@ -102,8 +114,33 @@ namespace ScavengerWorld.World
 
         public void Destroy(WorldObject obj)
         {
-            //TODO: The object is known to be destroyed, take it out immediately
-            throw new NotImplementedException();
+            var objectId = obj.Id;
+
+            if (obj is Unit unit)
+            {
+                //TODO: Remove from Teams/AllUnits
+            }
+            else if (obj is Food food)
+            {
+                //TODO: Remove from Food list
+            }
+            else if (obj is WorldObject wobject)
+            {
+                //TODO: Remove from InanimateObjects
+            }
+            else if (obj is FoodStorage storage)
+            {
+                //TODO: Remove from Team
+            }
+
+            //TODO: Make sure owner releases the object
+            if (obj is ITransferable transferable && transferable.HasOwner)
+            {
+                var owner = FindObject(transferable.Owner) as IDropper;
+                owner.Drop(transferable);
+            }
+
+            DestroyedObjects.Add(obj);
         }
 
         public void Destroy(Guid id)
