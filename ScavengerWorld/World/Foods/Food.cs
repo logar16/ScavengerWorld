@@ -6,7 +6,6 @@ namespace ScavengerWorld.World.Foods
     public class Food : WorldObject, IDiscoverable, ISteppable, ITransferable
     {
         public SensoryDisplay Display { get; protected set; }
-        //public FoodStorage Storage { get; set; }   //Not sure if the food needs to know where it is.  Maybe someday...
         Guid ITransferable.Owner { get; set; }
 
         public int Quantity { get; private set; }
@@ -24,6 +23,10 @@ namespace ScavengerWorld.World.Foods
         {
             get => Quantity * (int)Quality * (int)Quality;
         }
+        /// <summary>
+        /// Should be set by the outside world so the food knows how fast it should decay
+        /// </summary>
+        public bool InStorage { get; set; }
 
         private double Freshness;
 
@@ -36,10 +39,10 @@ namespace ScavengerWorld.World.Foods
             Quantity = quantity;
             Quality = quality;
             Display = sensoryDisplay;
-            ResetHealth();
+            ResetFreshness();
         }
 
-        private void ResetHealth()
+        private void ResetFreshness()
         {
             Freshness = 1000 / (int)Quality;
         }
@@ -54,25 +57,27 @@ namespace ScavengerWorld.World.Foods
 
         public override bool ShouldRemove()
         {
-            return Freshness < 0 && Quality == FoodQuality.POOR;
+            return Quantity <= 0 || (Freshness < 0 && Quality == FoodQuality.POOR);
         }
 
         public void Step(int timeStep)
         {
-            //if (Storage != null)
-            //TODO: Should storage just reduce impact of decay?
             Decay(timeStep);
         }
 
+        /// <summary>
+        /// Being in storage impacts decay rate
+        /// </summary>
+        /// <param name="timeStep"></param>
         private void Decay(int timeStep)
         {
-            Freshness -= timeStep;
-            if (Freshness < 0)
-                if ((int)Quality > 1)
-                {
-                    Quality = (FoodQuality)((int)Quality - 1);
-                    ResetHealth();
-                }
+            var modifier = InStorage ? 0.25 : 1.0;
+            Freshness -= timeStep * modifier;
+            if (Freshness < 0 && (int)Quality > 1)
+            {
+                Quality = (FoodQuality)((int)Quality - 1);
+                ResetFreshness();
+            }
         }
 
         public override object Clone()
