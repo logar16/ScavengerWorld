@@ -73,5 +73,10 @@ namespace ScavengerWorld.World
         {
             return $"{IdPrefix}: {{ Location: {Location} }}";
         }
+
+        virtual internal string DrawAs()
+        {
+            return "X";
+        }
     }
 }

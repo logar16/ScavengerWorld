@@ -11,13 +11,13 @@ namespace ScavengerWorld.World
 {
     public class WorldState : IState, ISteppable
     {
-        public AmbientEnvironment Ambience { get; internal set; }
-        public Geography Geography { get; internal set; }
-        public IEnumerable<Team> Teams { get; internal set; }
+        public AmbientEnvironment Ambience { get; set; }
+        public Geography Geography { get; set; }
+        public IEnumerable<Team> Teams { get; set; }
         public IEnumerable<Unit> Units { get => Teams.SelectMany(t => t.Units); }
         public int TotalUnits { get => Teams.Sum(t => t.UnitCount); } 
 
-        public Dictionary<Guid, WorldObject> Objects { get; internal set; }
+        public Dictionary<Guid, WorldObject> Objects { get; set; }
 
         private List<WorldObject> DestroyedObjects;
 
@@ -65,7 +65,7 @@ namespace ScavengerWorld.World
 
         public void Add(WorldObject obj)
         {
-            throw new NotImplementedException();
+            Objects.TryAdd(obj.Id, obj);
         }
 
         public void Destroy(WorldObject obj)

@@ -9,6 +9,8 @@ namespace ScavengerWorld.World
         public int Width { get; }
         public int Height { get; }
 
+        private double RatioWalkable { get; set; }
+
         public enum Terrain { NORMAL, ROUGH };
 
         private Terrain[,] Space;
@@ -27,6 +29,7 @@ namespace ScavengerWorld.World
             Width = width;
             Height = height;
             Space = new Terrain[height, width];
+            RatioWalkable = ratioWalkable;
             Random = (seed < 0) ? new Random() : new Random(seed);
 
             for (int row = 0; row < height; row++)
@@ -42,19 +45,7 @@ namespace ScavengerWorld.World
 
         public override string ToString()
         {
-            var builder = new StringBuilder();
-            builder.AppendLine();
-            for (int row = 0; row < Height; row++)
-            {
-                for (int col = 0; col < Width; col++)
-                {
-                    if (col == 0)
-                        builder.Append("|");
-                    builder.Append($"{(int)Space[row, col]}|");
-                }
-                builder.AppendLine();
-            }
-            return builder.ToString();
+            return $"[Geography] {{ Height: {Height}, Width: {Width}, RatioWalkable: {RatioWalkable} }}";
         }
 
         public object Clone()
@@ -64,7 +55,12 @@ namespace ScavengerWorld.World
 
         public virtual Terrain GetTerrainAt(Point location)
         {
-            return Space[(int)location.Y, (int)location.X];
+            return GetTerrainAt(location.Y, location.X);
+        }
+
+        public virtual Terrain GetTerrainAt(int row, int col)
+        {
+            return Space[row, col];
         }
     }
 }
