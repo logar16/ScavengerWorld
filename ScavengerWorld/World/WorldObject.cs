@@ -21,11 +21,22 @@ namespace ScavengerWorld.World
             Location = new Point();
         }
 
+        /// <summary>
+        /// Moves the point by the amount specified in the point's X and Y.
+        /// It does not move to the specified point's location.  
+        /// </summary>
+        /// <param name="direction"></param>
         public virtual void Move(Point direction)
         {
             Move(direction.X, direction.Y);
         }
 
+        /// <summary>
+        /// The amount of spaces to move the object in the X and Y directions.
+        /// Negative values move it up and left, positive values down and right.
+        /// </summary>
+        /// <param name="xDelta"></param>
+        /// <param name="yDelta"></param>
         public virtual void Move(int xDelta, int yDelta)
         {
             var location = Location;
@@ -33,10 +44,20 @@ namespace ScavengerWorld.World
             Location = location;
         }
 
+        public virtual void MoveTo(Point point)
+        {
+            if (point.X < 0)
+                point.X = Location.X;
+            if (point.Y < 0)
+                point.Y = Location.Y;
+
+            Location = point;
+        }
+
         public double DistanceTo(WorldObject other)
         {
             if (other == null)
-                throw new ArgumentException("Distance cannot be determined from a null input `other`");
+                throw new ArgumentNullException("Distance cannot be determined from a null input `other`");
 
             return DistanceTo(other.Location);
         }
@@ -74,6 +95,11 @@ namespace ScavengerWorld.World
             return $"{IdPrefix}: {{ Location: {Location} }}";
         }
 
+        /// <summary>
+        /// Method which allows the printer object to display the object in a discernable way.
+        /// Default is "X", but each object should use a different character to distinguish it visually.
+        /// </summary>
+        /// <returns></returns>
         virtual internal string DrawAs()
         {
             return "X";

@@ -55,9 +55,6 @@ namespace ScavengerWorld.Printing
                 list.Add(obj);
             }
 
-            //var lists = map.Cast<List<WorldObject>>();
-            //var counts = lists.Select(l => l?.Count ?? 0);
-            //var max = counts.Max();
             var max = map.Cast<List<WorldObject>>().Select(l => l?.Count).Max() ?? 0;
             var size = 1;
             while (size * size < max)
