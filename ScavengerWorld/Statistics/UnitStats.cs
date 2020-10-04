@@ -5,7 +5,7 @@
         //public enum StatType { ActionTaken, OutcomeEffected };
         public UnitStats()
         {
-            //TODO: How should this work?
+            //TODO: How should UnitStats work?
         }
 
         //public void Add(StatType type, string name, int count,)
