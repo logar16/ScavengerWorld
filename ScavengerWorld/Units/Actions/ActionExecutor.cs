@@ -42,7 +42,7 @@ namespace ScavengerWorld.Units.Actions
                 catch (BadActionException ex)
                 {
                     Log.Error("Failed to execute action due to the following error: ", ex);
-                    throw;      //TODO: Do we really want to throw errors here?
+                    throw;      //TODO: Do we really want to throw errors here?  Testing is easier, but that is all
                 }
             }
         }
